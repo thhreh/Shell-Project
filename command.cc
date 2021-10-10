@@ -198,9 +198,11 @@ void Command::execute() {
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
           x[j] = (char *)_simpleCommands[i]->_arguments[j]->c_str();
+
         }
         x[argsize] = NULL;
-        execvp(x[0], x);
+        execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
+        exit(1);
       }
     }
     
