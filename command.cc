@@ -122,8 +122,8 @@ void Command::execute() {
       else {
             //Convert std::vector<std::string *> _arguments into char**
         char ** x = new char*[argsize+1];
-        for (int j = 0; j<argsize;j++){
-          x[j] = (char *)_simpleCommands[i]->arguments[j]->c_str();
+        for (size_t j = 0; j<argsize;j++){
+          x[j] = (char *)_simpleCommands[i]->_arguments[j]->c_str();
         }
         x[argsize] = NULL;
         execvp(x[0], x);
