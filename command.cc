@@ -201,7 +201,6 @@ void Command::execute() {
         }
         x[argsize] = NULL;
         execvp(x[0], x);
-        _exit(1); //exit immeditately without messing with buffer
       }
     }
     
