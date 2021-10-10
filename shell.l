@@ -44,7 +44,7 @@ void myunputc(int c) {
 }
 
 "<" {
-  return LESS:
+  return LESS;
 }
 
 "&" {
