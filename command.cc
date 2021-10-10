@@ -129,6 +129,10 @@ void Command::execute() {
       fdin = dup(defaultin);
     }
 
+    dup2(fderr, 2);
+    close(fderr);
+
+
     int ret;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
       dup2(fdin, 0);
@@ -186,6 +190,10 @@ void Command::execute() {
         fdin = fdpipe[0];
       }
 
+      dup2(fdout, 1);
+      close(fdout);
+
+
 
       ret = fork();
       size_t argsize = _simpleCommands[i]->_arguments.size();
@@ -193,7 +201,7 @@ void Command::execute() {
          perror("fork");
          exit(2);
       }
-      else {
+      else if(ret == 0) {
             //Convert std::vector<std::string *> _arguments into char**
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
