@@ -118,7 +118,7 @@ void Command::execute() {
     int fdpipe[2];
 
     if (_inFile) {
-      const char* myinfile = _infile->c_str();
+      const char* myinfile = _inFile->c_str();
       fdin = open(myinfile, O_RDONLY);
       if (fdin < 0){
         fprintf("edge");
@@ -155,7 +155,7 @@ void Command::execute() {
           fdout = dup(defaultout);
         }
         if(_errFile){
-          const char* errfile = +errFile->c_str();
+          const char* errfile = _errFile->c_str();
           if(_append){
             fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
             if(fderr > 0){
