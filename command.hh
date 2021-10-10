@@ -1,7 +1,12 @@
 #ifndef command_hh
 #define command_hh
 
+
 #include "simpleCommand.hh"
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Command Data Structure
 
