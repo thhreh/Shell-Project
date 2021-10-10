@@ -129,8 +129,6 @@ void Command::execute() {
       fdin = dup(defaultin);
     }
 
-    dup2(fderr, 2);
-    close(fderr);
 
 
     int ret;
@@ -181,7 +179,7 @@ void Command::execute() {
             return;
           }
         }
-        dup2(fdout, 1);
+        dup2(fderr, 2);
         close(fderr);
       }
       else {
