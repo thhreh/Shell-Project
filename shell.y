@@ -115,23 +115,23 @@ iomodifier_opt:
     Shell::_currentCommand._outFile = $2;
   }//greatergreater ampersand 
   | GREATGREATAMPERSAND WORD {
-    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2;
-    Shell::_currentCommand._errFile = $2;
-    Shell::_currentCommand._append = true;
+      printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._errFile = $2;
+      Shell::_currentCommand._append = true;
   }
   | GREATAMPERSAND WORD {
-    Shell::_currentCommand._outFile = $2;
-    Shell::_currentCommand._errFile = $2;
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._errFile = $2;
   } //input
   | LESS WORD {
-    printf("   Yacc: insert input \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._inFile = $2;
+      printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+      Shell::_currentCommand._inFile = $2;
   }
   | GREATGREAT WORD {
-    printf("   Yacc: insert input \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2;
-    Shell::_currentCommand._append = true;
+      printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._append = true;
   }
   ;
 
