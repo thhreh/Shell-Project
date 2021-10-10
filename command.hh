@@ -11,6 +11,8 @@ struct Command {
   std::string * _inFile;
   std::string * _errFile;
   bool _background;
+  //decide if we will append to the following file
+  bool _append;
 
   Command();
   void insertSimpleCommand( SimpleCommand * simpleCommand );
