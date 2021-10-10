@@ -107,9 +107,9 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
-    int defaultin = dup( 0 );
-    int defaultout = dup( 1 );
-    int defaulterr = dup( 2 );
+    int defaultin = dup(0);
+    int defaultout = dup(1);
+    int defaulterr = dup(2);
     
     int ret = 0;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
