@@ -818,7 +818,7 @@ case 6:
 YY_RULE_SETUP
 #line 46 "shell.l"
 {
-  return LESS:
+  return LESS;
 }
 	YY_BREAK
 case 7:
