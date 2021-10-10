@@ -124,6 +124,7 @@ void Command::execute() {
         char ** x = new char*[argsize+1];
         execvp(x[0], x);
         _exit(1); //exit immeditately without messing with buffer
+      }
     }
     if (!_background) {
       waitpid(ret, NULL, 0);
@@ -136,3 +137,4 @@ void Command::execute() {
 }
 
 SimpleCommand * Command::_currentSimpleCommand;
+
