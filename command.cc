@@ -103,7 +103,7 @@ void Command::execute() {
     // Print contents of Command data structure
 
     if ( isatty(0)) {
-      Print prompt
+      print();
     }
     //print();
 
