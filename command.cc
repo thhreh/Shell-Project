@@ -107,21 +107,25 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
-    int defaultin = dup(0);
-    int defaultout = dup(1);
-    int defaulterr = dup(2);
-    
-    int ret = 0;
+    //int defaultin = dup(0);
+    //int defaultout = dup(1);
+    //int defaulterr = dup(2);
+
+    int ret;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
       ret = fork();
       size_t argsize = _simpleCommands[i]->_arguments.size();
       if (ret == -1) {
-         perror("fork\n");
+         perror("fork");
          exit(2);
       }
       else {
             //Convert std::vector<std::string *> _arguments into char**
         char ** x = new char*[argsize+1];
+        for (int j = 0; j<argsize;j++){
+          x[j] = (char *)_simpleCommands[i]->arguments[j]->c_str();
+        }
+        x[argsize] = NULL;
         execvp(x[0], x);
         _exit(1); //exit immeditately without messing with buffer
       }
