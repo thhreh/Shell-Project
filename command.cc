@@ -102,9 +102,6 @@ void Command::execute() {
 
     // Print contents of Command data structure
 
-    if ( isatty(0)) {
-      print(prompt);
-    }
     print();
 
     // Add execution here
