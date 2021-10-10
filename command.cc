@@ -65,7 +65,7 @@ void Command::clear() {
     _errFile = NULL;
 
     _background = false;
-    _append = false
+    _append = false;
 }
 
 void Command::print() {
