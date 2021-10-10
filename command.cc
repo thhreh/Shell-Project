@@ -101,7 +101,11 @@ void Command::execute() {
     }
 
     // Print contents of Command data structure
-    print();
+
+    if ( isatty(0)) {
+      Print prompt
+    }
+    //print();
 
     // Add execution here
     // For every simple command fork a new process
