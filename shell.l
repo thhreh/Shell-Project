@@ -1,6 +1,5 @@
 
-/*
- *
+ /*
  * CS-252 
  * shell.l: lexical analyzer for shell
  * You have to extend it.
@@ -32,12 +31,47 @@ void myunputc(int c) {
   /* Discard spaces and tabs */
 }
 
+"|" {
+  return PIPE;
+}
+
 ">" {
   return GREAT;
 }
+
+">>" {
+  return GREATGREAT;
+}
+
+"<" {
+  return LESS:
+}
+
+"&" {
+  return AMPERSAND;
+}
+
+">&" {
+  return GREATAMPERSAND;
+}
+
+">>&" {
+  return GREATGREATAMPERSAND;
+}
+
+">>" {
+  return GREATGREAT;
+}
+
+
+
 
 [^ \t\n][^ \t\n]*  {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
   return WORD;
+}
+
+.  {
+    return NOTOKEN;
 }
