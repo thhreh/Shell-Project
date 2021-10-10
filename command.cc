@@ -121,7 +121,7 @@ void Command::execute() {
       const char* myinfile = _inFile->c_str();
       fdin = open(myinfile, O_RDONLY);
       if (fdin < 0){
-        fprintf("edge");
+        printf("edge");
         return;
       }
     }
@@ -138,15 +138,15 @@ void Command::execute() {
         if(_outFile ){
           const char* myoutfile = _outFile->c_str();
           if(_append){
-            fdout = open(outfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+            fdout = open(myoutfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
             if (fdout < 0){
-              fprintf("edge");
+              printf("edge");
               return;
             }
             else {
-              fdout = open(outfile, O_CREAT|O_WRONLY|O_TRUNC, 0664);
+              fdout = open(myoutfile, O_CREAT|O_WRONLY|O_TRUNC, 0664);
               if (fdout < 0){
-                fprintf("edge");
+                printf("edge");
                 return;
               }
             }
@@ -159,21 +159,21 @@ void Command::execute() {
           if(_append){
             fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
             if(fderr > 0){
-              fprintf("edge");
+              printf("edge");
               return;
             }
           }
           else {
             fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
             if (fderr < 0){
-              fprintf("edge");
+              printf("edge");
               return;
             }
           }
         } else if(!_errFile){
           fderr = dup(defaulterr);
           if (fderr < 0){
-            fprintf("edge");
+            printf("edge");
             return;
           }
         }
