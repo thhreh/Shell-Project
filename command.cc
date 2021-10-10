@@ -107,12 +107,86 @@ void Command::execute() {
     // For every simple command fork a new process
     // Setup i/o redirection
     // and call exec
-    //int defaultin = dup(0);
-    //int defaultout = dup(1);
-    //int defaulterr = dup(2);
+    int defaultin = dup(0);
+    int defaultout = dup(1);
+    int defaulterr = dup(2);
+
+    //initialize input
+    int fdin;
+    int fdout;
+    int fderr;
+    int fdpipe[2];
+
+    if (_inFile) {
+      const char* myinfile = _infile->c_str();
+      fdin = open(myinfile, O_RDONLY);
+      if (fdin < 0){
+        fprintf("edge");
+        return;
+      }
+    }
+    else{
+      fdin = dup(defaultin);
+    }
 
     int ret;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
+      dup2(fdin, 0);
+      close(fdin);
+      if (i == _simpleCommands.size() - 1) {
+        //when last simple
+        if(_outFile ){
+          const char* myoutfile = _outFile->c_str();
+          if(_append){
+            fdout = open(outfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+            if (fdout < 0){
+              fprintf("edge");
+              return;
+            }
+            else {
+              fdout = open(outfile, O_CREAT|O_WRONLY|O_TRUNC, 0664);
+              if (fdout < 0){
+                fprintf("edge");
+                return;
+              }
+            }
+          }
+        } else if(!_outFile){
+          fdout = dup(defaultout);
+        }
+        if(_errFile){
+          const char* errfile = +errFile->c_str();
+          if(_append){
+            fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+            if(fderr > 0){
+              fprintf("edge");
+              return;
+            }
+          }
+          else {
+            fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+            if (fderr < 0){
+              fprintf("edge");
+              return;
+            }
+          }
+        } else if(!_errFile){
+          fderr = dup(defaulterr);
+          if (fderr < 0){
+            fprintf("edge");
+            return;
+          }
+        }
+        dup2(fdout, 1);
+        close(fderr);
+      }
+      else {
+        pipe(fdpipe);
+        fdout = fdpipe[1];
+        fdin = fdpipe[0];
+      }
+
+
       ret = fork();
       size_t argsize = _simpleCommands[i]->_arguments.size();
       if (ret == -1) {
@@ -130,6 +204,14 @@ void Command::execute() {
         _exit(1); //exit immeditately without messing with buffer
       }
     }
+    
+    dup2(defaultin,0);
+    dup2(defaultout,1);
+    dup2(defaulterr,2);
+    close(defaultin);
+    close(defaultout);
+    close(defaulterr);
+
     if (!_background) {
       waitpid(ret, 0, 0);
     }
