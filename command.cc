@@ -181,7 +181,7 @@ void Command::execute() {
         close(fderr);
       }
       else {
-      //if it is not the last command, fork a child process
+      //if it is not the last command, pipe
         int fdpipe[2];
         pipe(fdpipe);
         fdout = fdpipe[1];
