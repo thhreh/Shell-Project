@@ -139,6 +139,8 @@ void Command::execute() {
       fderr = dup(defaulterr);
     }
 
+    //redirect err
+
     dup2(fderr, 2);
     close(fderr);
 
@@ -151,6 +153,7 @@ void Command::execute() {
         //when last simple
         if(_outFile ){
           const char* myoutfile = _outFile->c_str();
+          //check for the way to write file
           if(_append){
             fdout = open(myoutfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
             }
@@ -186,7 +189,7 @@ void Command::execute() {
       close(fdout);
 
 
-
+      //fork child program
       ret = fork();
       size_t argsize = _simpleCommands[i]->_arguments.size();
       if (ret == -1) {
@@ -206,14 +209,14 @@ void Command::execute() {
         exit(1);
       }
     }
-    
+    //redirect stdout
     dup2(defaultin,0);
     dup2(defaultout,1);
     dup2(defaulterr,2);
     close(defaultin);
     close(defaultout);
     close(defaulterr);
-
+    //check for &
     if (!_background) {
       waitpid(ret, NULL, 0);
     }
