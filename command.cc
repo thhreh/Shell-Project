@@ -156,12 +156,7 @@ void Command::execute() {
             }
             else {
               fdout = open(myoutfile, O_CREAT|O_WRONLY|O_TRUNC, 0664);
-              if (fdout < 0){
-                printf("edge");
-                return;
-              }
             }
-          
         } else if(!_outFile){
           fdout = dup(defaultout);
         }
