@@ -121,10 +121,6 @@ void Command::execute() {
     if (_inFile) {
       const char* myinfile = _inFile->c_str();
       fdin = open(myinfile, O_RDONLY);
-      if (fdin < 0){
-        printf("edge");
-        return;
-      }
     }
     else{
       fdin = dup(defaultin);
@@ -205,6 +201,7 @@ void Command::execute() {
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
           x[j] = (char *)_simpleCommands[i]->_arguments[j]->c_str();
+          x[j][strlen(_simpleCommands[i]->_arguments[j]->c_str())] = '\0';
 
         }
         x[argsize] = NULL;
@@ -221,7 +218,7 @@ void Command::execute() {
     close(defaulterr);
 
     if (!_background) {
-      waitpid(ret, 0, 0);
+      waitpid(ret, NULL, 0);
     }
     // Clear to prepare for next command
     clear();

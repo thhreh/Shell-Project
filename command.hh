@@ -12,7 +12,8 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/stat.h>
-#include <fcntl.h>
+#include <regex.h>
+#include <pwd.h>
 
 
 // Command Data Structure
