@@ -861,7 +861,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 78 "shell.l"
+#line 77 "shell.l"
 ECHO;
 	YY_BREAK
 #line 868 "lex.yy.cc"
@@ -1881,4 +1881,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 78 "shell.l"
+#line 77 "shell.l"
