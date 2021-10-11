@@ -117,6 +117,8 @@ void Command::execute() {
     int fdout;
     int fderr;
 
+    //initialize inputs
+
     if (_inFile) {
       const char* myinfile = _inFile->c_str();
       fdin = open(myinfile, O_RDONLY);
@@ -126,7 +128,7 @@ void Command::execute() {
     }
 
 
-
+    //treverse trough simple commands
     int ret;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
       dup2(fdin, 0);
@@ -179,6 +181,7 @@ void Command::execute() {
         close(fderr);
       }
       else {
+      //if it is not the last command, fork a child process
         int fdpipe[2];
         pipe(fdpipe);
         fdout = fdpipe[1];
