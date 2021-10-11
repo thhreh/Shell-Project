@@ -546,7 +546,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    46,    46,    50,    51,    54,    58,    62,    63,    68,
       69,    73,    74,    75,    79,    82,    86,    93,    94,    98,
-     105,   113,   117,   123,   128,   132
+     105,   113,   117,   125,   132,   136
 };
 #endif
 
@@ -1420,44 +1420,48 @@ yyreduce:
 #line 117 "shell.y"
                              {
       printf("   Yacc: insert output \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
+      const char *s = (yyvsp[0].cpp_string)
+      std::string str(s);
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
-      Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
+      Shell::_currentCommand._errFile = s;
       Shell::_currentCommand._append = true;
   }
-#line 1428 "y.tab.cc"
+#line 1430 "y.tab.cc"
     break;
 
   case 23:
-#line 123 "shell.y"
+#line 125 "shell.y"
                         {
       printf("   Yacc: insert output \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
-      Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
+      const char *s = (yyvsp[0].cpp_string)
+      std::string str(s);
+      Shell::_currentCommand._outFile = s;
       Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
   }
-#line 1438 "y.tab.cc"
+#line 1442 "y.tab.cc"
     break;
 
   case 24:
-#line 128 "shell.y"
+#line 132 "shell.y"
               {
       printf("   Yacc: insert input \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
       Shell::_currentCommand._inFile = (yyvsp[0].cpp_string);
   }
-#line 1447 "y.tab.cc"
+#line 1451 "y.tab.cc"
     break;
 
   case 25:
-#line 132 "shell.y"
+#line 136 "shell.y"
                     {
       printf("   Yacc: insert input \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._append = true;
   }
-#line 1457 "y.tab.cc"
+#line 1461 "y.tab.cc"
     break;
 
 
-#line 1461 "y.tab.cc"
+#line 1465 "y.tab.cc"
 
       default: break;
     }
@@ -1689,7 +1693,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 141 "shell.y"
+#line 145 "shell.y"
 
 
 void

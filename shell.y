@@ -116,18 +116,16 @@ iomodifier_opt:
   }//greatergreater ampersand 
   | GREATGREATAMPERSAND WORD {
       printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-      const char *s = $2
-      std::string str(s);
+      std::string *errFile = new std::string($2->c_str());
       Shell::_currentCommand._outFile = $2;
-      Shell::_currentCommand._errFile = s;
+      Shell::_currentCommand._errFile = errFile;
       Shell::_currentCommand._append = true;
   }
   | GREATAMPERSAND WORD {
       printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-      const char *s = $2
-      std::string str(s);
-      Shell::_currentCommand._outFile = s;
-      Shell::_currentCommand._errFile = $2;
+      std::string *errFile = new std::string($2->c_str());
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._errFile = errFile;
   } //input
   | LESS WORD {
       printf("   Yacc: insert input \"%s\"\n", $2->c_str());
