@@ -116,7 +116,6 @@ void Command::execute() {
     int fdin;
     int fdout;
     int fderr;
-    int fdpipe[2];
 
     if (_inFile) {
       const char* myinfile = _inFile->c_str();
@@ -180,6 +179,7 @@ void Command::execute() {
         close(fderr);
       }
       else {
+        int fdpipe[2];
         pipe(fdpipe);
         fdout = fdpipe[1];
         fdin = fdpipe[0];
