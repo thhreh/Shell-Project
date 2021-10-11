@@ -127,6 +127,20 @@ void Command::execute() {
       fdin = dup(defaultin);
     }
 
+    if(_errFile) {
+      const char* errfile = _errFile->c_str();1~
+      if(_append) {
+        fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+      }
+      else {
+        fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+      }
+    } else {
+      fderr = dup(defaulterr);
+    }
+
+    dup2(fderr, 2);
+    close(fderr);
 
     //treverse trough simple commands
     int ret;
@@ -154,31 +168,19 @@ void Command::execute() {
         } else if(!_outFile){
           fdout = dup(defaultout);
         }
-        if(_errFile){
-          const char* errfile = _errFile->c_str();
-          if(_append){
-            fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
-            if(fderr > 0){
-              printf("edge");
-              return;
-            }
-          }
-          else {
-            fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
-            if (fderr < 0){
-              printf("edge");
-              return;
-            }
-          }
-        } else if(!_errFile){
-          fderr = dup(defaulterr);
-          if (fderr < 0){
-            printf("edge");
-            return;
-          }
-        }
-        dup2(fderr, 2);
-        close(fderr);
+        //if(_errFile){
+          //const char* errfile = _errFile->c_str();
+          //if(_append){
+            //fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+          //}
+          //else {
+            //fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+          //}
+        //} else if(!_errFile){
+          //fderr = dup(defaulterr);
+        //}
+        //dup2(fderr, 2);
+        //close(fderr);
       }
       else {
       //if it is not the last command, pipe
