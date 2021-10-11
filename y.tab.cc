@@ -546,7 +546,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    46,    46,    50,    51,    54,    58,    62,    63,    68,
       69,    73,    74,    75,    79,    82,    86,    93,    94,    98,
-     105,   113,   117,   123,   127,   131
+     105,   113,   117,   123,   128,   132
 };
 #endif
 
@@ -1430,33 +1430,34 @@ yyreduce:
   case 23:
 #line 123 "shell.y"
                         {
+      printf("   Yacc: insert output \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
   }
-#line 1437 "y.tab.cc"
+#line 1438 "y.tab.cc"
     break;
 
   case 24:
-#line 127 "shell.y"
+#line 128 "shell.y"
               {
       printf("   Yacc: insert input \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
       Shell::_currentCommand._inFile = (yyvsp[0].cpp_string);
   }
-#line 1446 "y.tab.cc"
+#line 1447 "y.tab.cc"
     break;
 
   case 25:
-#line 131 "shell.y"
+#line 132 "shell.y"
                     {
       printf("   Yacc: insert input \"%s\"\n", (yyvsp[0].cpp_string)->c_str());
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._append = true;
   }
-#line 1456 "y.tab.cc"
+#line 1457 "y.tab.cc"
     break;
 
 
-#line 1460 "y.tab.cc"
+#line 1461 "y.tab.cc"
 
       default: break;
     }
@@ -1688,7 +1689,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 140 "shell.y"
+#line 141 "shell.y"
 
 
 void
