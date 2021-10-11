@@ -1,9 +1,10 @@
+bgfile
 err1
+err2
 file1.cc
 file-list-1
 file-list-2
 files
-out
 out2
 README
 shell-in
@@ -18,6 +19,7 @@ test_cd1
 test_cd2
 test_cd3
 test_cd4
+test_direct_input
 test_env_expand1
 test_env_expand2
 test_env_var_bang
