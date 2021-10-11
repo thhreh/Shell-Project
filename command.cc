@@ -153,6 +153,7 @@ void Command::execute() {
           const char* myoutfile = _outFile->c_str();
           if(_append){
             fdout = open(myoutfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+            }
             else {
               fdout = open(myoutfile, O_CREAT|O_WRONLY|O_TRUNC, 0664);
               if (fdout < 0){
@@ -160,7 +161,7 @@ void Command::execute() {
                 return;
               }
             }
-          }
+          
         } else if(!_outFile){
           fdout = dup(defaultout);
         }
@@ -177,7 +178,7 @@ void Command::execute() {
         //}
         //dup2(fderr, 2);
         //close(fderr);
-      }
+      //}
       else {
       //if it is not the last command, pipe
         int fdpipe[2];
