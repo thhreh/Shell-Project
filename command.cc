@@ -128,7 +128,7 @@ void Command::execute() {
     }
 
     if(_errFile) {
-      const char* errfile = _errFile->c_str();1~
+      const char* errfile = _errFile->c_str();
       if(_append) {
         fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
       }
@@ -153,10 +153,6 @@ void Command::execute() {
           const char* myoutfile = _outFile->c_str();
           if(_append){
             fdout = open(myoutfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
-            if (fdout < 0){
-              printf("edge");
-              return;
-            }
             else {
               fdout = open(myoutfile, O_CREAT|O_WRONLY|O_TRUNC, 0664);
               if (fdout < 0){
