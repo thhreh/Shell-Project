@@ -223,6 +223,7 @@ void Command::execute() {
     // Print new prompt
     Shell::prompt();
 }
+}
 
 SimpleCommand * Command::_currentSimpleCommand;
 
