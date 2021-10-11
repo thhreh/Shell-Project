@@ -59,9 +59,6 @@ void myunputc(int c) {
   return GREATGREATAMPERSAND;
 }
 
-">>" {
-  return GREATGREAT;
-}
 
 
 
@@ -74,4 +71,7 @@ void myunputc(int c) {
 
 .  {
     return NOTOKEN;
+
 }
+
+

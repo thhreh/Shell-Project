@@ -197,7 +197,7 @@ void Command::execute() {
       ret = fork();
       size_t argsize = _simpleCommands[i]->_arguments.size();
       if (ret == -1) {
-         perror("fork");
+         perror("fork\n");
          exit(2);
       }
       else if(ret == 0) {
