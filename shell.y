@@ -53,7 +53,7 @@ commands:
 
 command: simple_command
        ;
-
+//simple command contain three parts
 simple_command:	
   pipe_list io_modifier_list background_optional NEWLINE {
     printf("   Yacc: Execute command\n");
