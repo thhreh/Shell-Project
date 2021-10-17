@@ -123,7 +123,7 @@ bool Command::BuildinFunc(int i){
     else{
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
-    if(notfound < ){
+    if(notfound < 0){
       printf("No such cd");
     }
     clear();
