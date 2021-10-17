@@ -63,6 +63,28 @@ void myunputc(int c) {
   return GREATGREATAMPERSAND;
 }
 
+\$\([^\n]*\) {
+  //subshell
+
+  std::string str = yytext;
+  //remove $ 
+  if (str.at(0) == '$') {
+      str = str.substr(1,str.size()-1);
+  }
+  str = str.substr(1,str.size()-2);
+  //remove paren
+  std::size_t index = str.find(")");
+  std::string temp_string = str.substr(0,index-2);
+  int defaultin = dup(0);
+  int defaultout = dup(1);
+  int fdpipein[2];
+  pipe(fdpipein);
+  int fdpipeout[2];
+  pipe(fdpipeout);
+
+
+}
+
 
 
 
