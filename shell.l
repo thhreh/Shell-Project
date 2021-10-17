@@ -76,8 +76,6 @@ void myunputc(int c) {
 
 ["][^\n\"]*["] {
   //Quotes
-  printf("enter quote");
-
   yylval.cpp_string = new std::string(yytext);
   //printf("before, string = %s\n",yylval.cpp_string);
   *yylval.cpp_string = yylval.cpp_string->substr(1, yylval.cpp_string->length()-2);
@@ -88,7 +86,6 @@ void myunputc(int c) {
 [^ \t\n|><&]*\\[^ \t\n]*  {
   //escape
   //temp_string
-  printf("hello?");
   std::string temp_string = "";
   for(int index = 0; yytext[index] != '\0'; index++){
     if(!(yytext[index] =='\\' && yytext[index+1] != ' ')){
