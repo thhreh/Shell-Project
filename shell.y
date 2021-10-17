@@ -104,6 +104,11 @@ argument:
 command_word:
   WORD {
     //printf("   Yacc: insert command \"%s\"\n", $1->c_str());
+
+    if ( strcmp($1->c_str(), "exit") == 0 ) {
+      printf("Good Bye!!\n");
+      exit(1)
+    }
     Command::_currentSimpleCommand = new SimpleCommand();
     Command::_currentSimpleCommand->insertArgument( $1 );
   }
