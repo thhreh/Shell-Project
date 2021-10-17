@@ -1466,7 +1466,7 @@ yyreduce:
 #line 141 "shell.y"
                   {
     //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
-    Shell::_currentCommand.redirect(2, (yyvsp[0].cpp_string));
+    Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
   }
 #line 1472 "y.tab.cc"
     break;

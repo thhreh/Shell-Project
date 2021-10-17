@@ -113,11 +113,19 @@ iomodifier_opt:
   GREAT WORD {
     
     //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+    if (Shell::_currentCommand._outFile != NULL ){
+      printf("Ambiguous output redirect.\n");
+      exit(0);
+    }
     Shell::_currentCommand._outFile = $2;
   }//greatergreater ampersand 
   | GREATGREATAMPERSAND WORD {
       //use different string for err and out to aviod doubel free
       //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       std::string *errFile = new std::string($2->c_str());
       Shell::_currentCommand._outFile = $2;
       Shell::_currentCommand._errFile = errFile;
@@ -126,15 +134,27 @@ iomodifier_opt:
   | GREATAMPERSAND WORD {
       //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
       std::string *errFile = new std::string($2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       Shell::_currentCommand._outFile = $2;
       Shell::_currentCommand._errFile = errFile;
   } //input
   | LESS WORD {
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       Shell::_currentCommand._inFile = $2;
   }
   | GREATGREAT WORD {
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       Shell::_currentCommand._outFile = $2;
       Shell::_currentCommand._append = true;
   }
