@@ -78,7 +78,10 @@ void myunputc(int c) {
   //Quotes
 
   std::string str = yytext;
+  prinf(str)
+  printf("after")
   str = str.substr(1,str.length()-2);
+  printf(str)
   yylval.cpp_string = new std::string(str);
   return WORD;
 }
