@@ -100,6 +100,7 @@ bool Command::BuildinFunc(int i){
     if ( _simpleCommands[i]->_arguments.size() != 3 ) {
       perror("setenv");
     }
+    setenv(_simpleCommands[i]->_arguments[1]->c_str(), _simpleCommands[i]->_arguments[2]->c_str(), 1)
     clear();
     Shell::prompt();
     return true;
@@ -141,7 +142,7 @@ void Command::execute() {
 
     // Print contents of Command data structure
 
-    print();
+    //print();
 
     //exit shell
     std::string* cmd = _simpleCommands[0]->_arguments[0];
@@ -258,7 +259,7 @@ void Command::execute() {
             printf("%s\n", envvar[j]);;
             j++;
           }
-          exit(0);
+          return;
         }
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
