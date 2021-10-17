@@ -255,7 +255,7 @@ void Command::execute() {
           char ** envvar = environ;
           int j = 0;
           while (envvar[j] != NULL) {
-            printf("%s\n", envvar[i]);
+            printf("%s\n", envvar[j]);
             j++;
           }
           exit(0);
