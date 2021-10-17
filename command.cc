@@ -116,11 +116,15 @@ bool Command::BuildinFunc(int i){
   }
   //change directory
   if ( !strcmp(temp_arg->c_str(),"cd") ) {
+    int notfound;
     if (_simpleCommands[i]->_arguments.size()==1) {
       chdir(getenv("HOME"));
     }
     else{
-      chdir(_simpleCommands[i]->_arguments[1]->c_str());
+      notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
+    }
+    if(notfound < ){
+      printf("No such cd");
     }
     clear();
     Shell::prompt();
