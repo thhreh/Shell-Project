@@ -107,7 +107,9 @@ bool Command::BuildinFunc(int i){
   }
   //unset enviromental var
   if ( !strcmp(temp_arg->c_str(),"unsetenv") ) {
-    unsetenv(_simpleCommands[i]->_arguments[1]->c_str());
+    if(unsetenv(_simpleCommands[i]->_arguments[1]->c_str())){
+      perror("unsetenv");
+    }
     clear();
     Shell::prompt();
     return true;
