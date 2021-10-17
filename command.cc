@@ -141,7 +141,7 @@ void Command::execute() {
 
     // Print contents of Command data structure
 
-    //print();
+    print();
 
     //exit shell
     std::string* cmd = _simpleCommands[0]->_arguments[0];
@@ -255,7 +255,7 @@ void Command::execute() {
           char ** envvar = environ;
           int j = 0;
           while (envvar[j] != NULL) {
-            printf("%s\n", envvar[j]);
+            printf("%s\n", envvar[j]);;
             j++;
           }
           exit(0);
