@@ -74,16 +74,15 @@ void myunputc(int c) {
 }
 
 
-["][^\n\"]*["] {
+\"[^\n\"]*\" {
   //Quotes
-    
   std::string str = std::string(yytext);
   str = str.substr(1,str.size()-2);
   yylval.cpp_string = new std::string(str);
   return WORD;
 }
 
-[^ \t\n|><&]*\\[^ \t\n]*  {
+[^ \\\t\n]*(\\[^nt])((\\[^nt])|[^ \\\t\n])*  {
   std::string str = std::string(yytext);
   std::size_t charescap = str.find('\\');
   while(charescap!=-1) {
