@@ -124,7 +124,12 @@ bool Command::BuildinFunc(int i){
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     if(notfound < 0){
-      perror("cd");
+      if(_errFile){
+        const char* errfile = _errFile->c_str();
+        fderr = open(errfile, O_CREAT|OWRONLY|O_APPEND,0664);
+        dup2(fderr, perror("cd");
+        close(fderr);
+      }
     }
     clear();
     Shell::prompt();
