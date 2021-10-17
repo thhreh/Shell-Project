@@ -284,7 +284,8 @@ void Command::execute() {
           close(fdpipeout[1]);
           int ret1 = fork();
           if (ret1 == 0) {
-            execvp("/proc/self/exe", NULL);
+            char ** null_ptr = NULL;
+            execvp("/proc/self/exe", null_ptr);
             _exit(1);
           }
           else if (ret1 < 0) {
