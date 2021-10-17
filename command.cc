@@ -102,7 +102,7 @@ void Command::execute() {
 
     // Print contents of Command data structure
 
-    print();
+    //print();
 
     //exit shell
     std::string* cmd = _simpleCommands[0]->_arguments[0];
