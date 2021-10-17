@@ -889,6 +889,7 @@ YY_RULE_SETUP
 #line 77 "shell.l"
 {
   //Quotes
+  printf("enter quote")
 
   yylval.cpp_string = new std::string(yytext);
   //printf("before, string = %s\n",yylval.cpp_string);
@@ -899,7 +900,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 87 "shell.l"
+#line 88 "shell.l"
 {
   //escape
   //temp_string
@@ -916,7 +917,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 101 "shell.l"
+#line 102 "shell.l"
 {
     return NOTOKEN;
 
@@ -924,10 +925,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 106 "shell.l"
+#line 107 "shell.l"
 ECHO;
 	YY_BREAK
-#line 931 "lex.yy.cc"
+#line 932 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1944,4 +1945,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 106 "shell.l"
+#line 107 "shell.l"

@@ -67,7 +67,7 @@ void myunputc(int c) {
 
 
 
-[^ \t\n][^ \t\n]*  {
+[^ \t\n|><][^ \t\n|><]*  {
   /* Assume that file names have only alpha chars */
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -76,7 +76,7 @@ void myunputc(int c) {
 
 ["][^\n\"]*["] {
   //Quotes
-  printf("enter quote")
+  printf("enter quote");
 
   yylval.cpp_string = new std::string(yytext);
   //printf("before, string = %s\n",yylval.cpp_string);
