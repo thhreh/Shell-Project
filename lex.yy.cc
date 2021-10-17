@@ -909,9 +909,9 @@ YY_RULE_SETUP
   //Quotes
 
   yylval.cpp_string = new std::string(yytext);
-  printf("before, string = %s\n",yylval.cpp_string);
+  printf("before, string = %s\n",yylval.cpp_string-c_str);
   *yylval.cpp_string = yylval.cpp_string->substr(1, yylval.cpp_string->length()-2);
-  printf("after, string = %s\n",yylval.cpp_string);
+  printf("after, string = %s\n",yylval.cpp_string-c_str);
   return WORD;
 }
 	YY_BREAK

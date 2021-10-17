@@ -74,13 +74,13 @@ void myunputc(int c) {
 }
 
 
-[\"][^\n\"]*[\"] {
+["][^\n\"]*["] {
   //Quotes
 
   yylval.cpp_string = new std::string(yytext);
-  printf("before, string = %s\n",yylval.cpp_string-c_str);
+  //printf("before, string = %s\n",yylval.cpp_string);
   *yylval.cpp_string = yylval.cpp_string->substr(1, yylval.cpp_string->length()-2);
-  printf("after, string = %s\n",yylval.cpp_string-c_str);
+  //printf("after, string = %s\n",yylval.cpp_string);
   return WORD;
 }
 
