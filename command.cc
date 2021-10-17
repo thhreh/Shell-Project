@@ -95,6 +95,7 @@ void Command::print() {
 
 bool Command::BuildinFunc(int i){
   std::string* temp_arg = _simpleCommands[i]->_arguments[0];
+  int fderrr;
   //set enviromental var
   if ( !strcmp(temp_arg->c_str(),"setenv") ) {
     if ( _simpleCommands[i]->_arguments.size() != 3 ) {
@@ -126,9 +127,9 @@ bool Command::BuildinFunc(int i){
     if(notfound < 0){
       if(_errFile){
         const char* errfile = _errFile->c_str();
-        fderr = open(errfile, O_CREAT|OWRONLY|O_APPEND,0664);
-        dup2(fderr, perror("cd");
-        close(fderr);
+        fderrr = open(errfile, O_CREAT|O_WRONLY|O_APPEND,0664);
+        dup2(fderrr, perror("cd"));
+        close(fderrr);
       }
     }
     clear();
