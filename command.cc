@@ -116,7 +116,6 @@ bool Command::BuildinFunc(int i){
   }
   //change directory
   if ( !strcmp(temp_arg->c_str(),"cd") ) {
-    int error;
     if (_simpleCommands[i]->_arguments.size()==1) {
       chdir(getenv("HOME"));
     }
