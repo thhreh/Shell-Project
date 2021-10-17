@@ -548,7 +548,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    46,    46,    50,    51,    54,    58,    62,    63,    68,
       69,    73,    74,    75,    79,    82,    86,    93,    94,    98,
-     105,   113,   118,   126,   132,   136,   141,   141
+     105,   113,   122,   134,   144,   152,   161,   161
 };
 #endif
 
@@ -1414,65 +1414,85 @@ yyreduce:
              {
     
     //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+    if (Shell::_currentCommand._outFile != NULL ){
+      printf("Ambiguous output redirect.\n");
+      exit(0);
+    }
     Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
   }
-#line 1420 "y.tab.cc"
+#line 1424 "y.tab.cc"
     break;
 
   case 22:
-#line 118 "shell.y"
+#line 122 "shell.y"
                              {
       //use different string for err and out to aviod doubel free
       //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       std::string *errFile = new std::string((yyvsp[0].cpp_string)->c_str());
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._errFile = errFile;
       Shell::_currentCommand._append = true;
   }
-#line 1433 "y.tab.cc"
+#line 1441 "y.tab.cc"
     break;
 
   case 23:
-#line 126 "shell.y"
+#line 134 "shell.y"
                         {
       //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
       std::string *errFile = new std::string((yyvsp[0].cpp_string)->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._errFile = errFile;
   }
-#line 1444 "y.tab.cc"
+#line 1456 "y.tab.cc"
     break;
 
   case 24:
-#line 132 "shell.y"
+#line 144 "shell.y"
               {
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       Shell::_currentCommand._inFile = (yyvsp[0].cpp_string);
   }
-#line 1453 "y.tab.cc"
+#line 1469 "y.tab.cc"
     break;
 
   case 25:
-#line 136 "shell.y"
+#line 152 "shell.y"
                     {
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+      if (Shell::_currentCommand._outFile != NULL ){
+        printf("Ambiguous output redirect.\n");
+        exit(0);
+      }
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._append = true;
   }
-#line 1463 "y.tab.cc"
+#line 1483 "y.tab.cc"
     break;
 
   case 27:
-#line 141 "shell.y"
+#line 161 "shell.y"
                   {
     //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
     Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
   }
-#line 1472 "y.tab.cc"
+#line 1492 "y.tab.cc"
     break;
 
 
-#line 1476 "y.tab.cc"
+#line 1496 "y.tab.cc"
 
       default: break;
     }
@@ -1704,7 +1724,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 149 "shell.y"
+#line 169 "shell.y"
 
 
 void

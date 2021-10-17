@@ -73,6 +73,27 @@ void myunputc(int c) {
   return WORD;
 }
 
+
+["][^\n\"]*["] {
+  //Quotes
+    
+  std::string str = std::string(yytext);
+  str = str.substr(1,str.size()-2);
+  yylval.cpp_string = new std::string(str);
+  return WORD;
+}
+
+[^ \t\n|><&]*\\[^ \t\n]*  {
+  std::string str = std::string(yytext);
+  std::size_t charescap = str.find('\\');
+  while(charescap!=-1) {
+    str = str.substr(0,charescap) + str.substr(charescap+1,std::string::npos);
+    charescap = str.find('\\', charescap+1);
+  }
+  yylval.cpp_string = new std::string(str);
+  return WORD;
+}
+
 .  {
     return NOTOKEN;
 

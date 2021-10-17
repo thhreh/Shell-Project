@@ -104,6 +104,13 @@ void Command::execute() {
 
     //print();
 
+    //exit shell
+    std::string* cmd = _simpleCommands[0]->_arguments[0];
+    if ( !strcmp(cmd->c_str(),"exit") ) {
+      printf( "Good bye!!\n");
+      exit(1);
+    }
+
     // Add execution here
     // For every simple command fork a new process
     // Setup i/o redirection
