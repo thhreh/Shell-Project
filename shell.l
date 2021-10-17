@@ -76,7 +76,7 @@ void myunputc(int c) {
   return WORD;
 }
 
-[^ \t\n|><&]*\\[^ \t\n]* {
+([^ \t\n<>\|\&\"\(\)]|\\.)+ {
   //escape
   //temp_string
   char * str = strdup(yytext);
@@ -87,6 +87,7 @@ void myunputc(int c) {
     }
   }
   yylval.cpp_string = new std::string(temp_string);
+  temp_string.clear()
   return WORD;
 }
 
