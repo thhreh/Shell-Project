@@ -904,6 +904,8 @@ YY_RULE_SETUP
 {
   //escape
   //temp_string
+  char * str = strdup(yytext);
+  printf(str);
   std::string temp_string = "";
   for(int index = 0; yytext[index] != '\0'; index++){
     if(!(yytext[index] =='\\' && yytext[index+1] != ' ')){
@@ -916,7 +918,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 99 "shell.l"
+#line 101 "shell.l"
 {
     return NOTOKEN;
 
@@ -924,10 +926,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 104 "shell.l"
+#line 106 "shell.l"
 ECHO;
 	YY_BREAK
-#line 931 "lex.yy.cc"
+#line 933 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1944,4 +1946,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 104 "shell.l"
+#line 106 "shell.l"
