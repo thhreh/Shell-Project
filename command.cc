@@ -125,12 +125,8 @@ bool Command::BuildinFunc(int i){
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     if(notfound < 0){
-      if(_errFile){
-        const char* errfile = _errFile->c_str();
-        fderrr = open(errfile, O_CREAT|O_WRONLY|O_APPEND,0664);
-        dup2(fderrr, 2);
-        close(fderrr);
-      }
+      perror("cd")
+      exit(2);
     }
     clear();
     Shell::prompt();
@@ -268,6 +264,8 @@ void Command::execute() {
           }
           exit(0);
         }
+
+
 
 
         char ** x = new char*[argsize+1];
