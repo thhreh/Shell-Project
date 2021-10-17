@@ -79,10 +79,9 @@ void myunputc(int c) {
 
   std::string str = yytext;
   yylval.cpp_string = str
-  printf(yylval.cpp_string);
-  printf("quote")
+  printf("before, string = %s\n",yylval.cpp_string)
   *yylval.cpp_string = yylval.cpp_string->substr(1, yylval.cpp_string->length()-2);
-  printf(yylval.cpp_string);
+  printf("after, string = %s\n",yylval.cpp_string)
   return WORD;
 }
 

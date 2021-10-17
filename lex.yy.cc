@@ -909,11 +909,11 @@ YY_RULE_SETUP
   //Quotes
 
   std::string str = yytext;
-  printf(str->c_str)
-  printf("after")
-  str = str.substr(1,str.length()-2);
-  printf(str->c_str)
-  yylval.cpp_string = new std::string(str);
+  yylval.cpp_string = str
+  printf(yylval.cpp_string);
+  printf("quote")
+  *yylval.cpp_string = yylval.cpp_string->substr(1, yylval.cpp_string->length()-2);
+  printf(yylval.cpp_string);
   return WORD;
 }
 	YY_BREAK
