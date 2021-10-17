@@ -84,7 +84,7 @@ void myunputc(int c) {
   return WORD;
 }
 
-[^ \t\n|><&]*\\[^ \t\n]*  {
+$\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})*  {
   //escape
   //temp_string
   printf("Good Bye!!\n");
