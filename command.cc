@@ -128,7 +128,7 @@ bool Command::BuildinFunc(int i){
       if(_errFile){
         const char* errfile = _errFile->c_str();
         fderrr = open(errfile, O_CREAT|O_WRONLY|O_APPEND,0664);
-        dup2(fderrr, 2);
+        dup2(fderrr, "-bash: cd: notfound: No such file or directory");
         close(fderrr);
       }
     }
