@@ -87,7 +87,7 @@ void myunputc(int c) {
 ([^ \t\n<>\|\&\"\(\)]|\\.)+  {
   //escape
   //temp_string
-  printf("hello?")
+  printf("hello?");
   std::string temp_string = "";
   for(int index = 0; yytext[index] != '\0'; index++){
     if(!(yytext[index] =='\\' && yytext[index+1] != ' ')){
