@@ -100,7 +100,7 @@ bool Command::BuildinFunc(int i){
     if ( _simpleCommands[i]->_arguments.size() != 3 ) {
       perror("setenv");
     }
-    clear;
+    clear();
     Shell::prompt();
     return true;
   }
