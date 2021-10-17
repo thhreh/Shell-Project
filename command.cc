@@ -93,6 +93,44 @@ void Command::print() {
     printf( "\n\n" );
 }
 
+bool Command::BuildinFunc(i){
+  std::string* temp_arg = _simpleCommands[i]->_arguments[0];
+  //set enviromental var
+  if ( !strcmp(temp_arg->c_str(),"setenv") ) {
+    if ( _simpleCommands[i]->_arguments.size() != 3 ) {
+      perror("setenv");
+    }
+    clear
+    Shell::prompt();
+    return true;
+  }
+  //unset enviromental var
+  if ( !strcmp(temp_arg->c_str(),"unsetenv") ) {
+    unsetenv(_simpleCommands[i]->_arguments[1]->c_str());
+    clear();
+    Shell::prompt();
+    return true;
+  }
+  //change directory
+  if ( !strcmp(cmd->c_str(),"cd") ) {
+    if (_simpleCommands[i]->_arguments.size()==1) {
+      error = chdir(getenv("HOME"));
+    }
+    else{
+      error = chdir(_simpleCommands[i]->_arguments[1]->c_str());
+    }
+
+    if (error < 0) {
+      perror("cd");
+    }
+    clear();
+    Shell:prompt();
+    return true;
+  }
+
+  return false;
+}
+
 void Command::execute() {
     // Don't do anything if there are no simple commands
     if ( _simpleCommands.size() == 0 ) {
@@ -110,6 +148,10 @@ void Command::execute() {
       printf( "Good bye!!\n");
       exit(1);
     }
+    if(BuildinFunc(0)){
+      return;
+    }
+
 
     // Add execution here
     // For every simple command fork a new process
@@ -205,6 +247,15 @@ void Command::execute() {
       }
       else if(ret == 0) {
             //Convert std::vector<std::string *> _arguments into char**
+        if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
+          char ** envvar = environ;
+          int j = 0;
+          while (envvar[j] != NULL) {
+            printf("%s\n", envvar[i]);
+            j++;
+          }
+          exit(0);
+        }
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
           x[j] = (char *)_simpleCommands[i]->_arguments[j]->c_str();
