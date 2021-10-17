@@ -264,7 +264,7 @@ void Command::execute() {
             printf("%s\n", envvar[j]);;
             j++;
           }
-          return;
+          exit(0);
         }
 
 
