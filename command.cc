@@ -125,7 +125,7 @@ bool Command::BuildinFunc(int i){
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     if(notfound < 0){
-      perror("cd")
+      perror("cd");
       exit(2);
     }
     clear();
