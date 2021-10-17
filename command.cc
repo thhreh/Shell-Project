@@ -100,7 +100,7 @@ bool Command::BuildinFunc(int i){
     if ( _simpleCommands[i]->_arguments.size() != 3 ) {
       perror("setenv");
     }
-    clear
+    clear;
     Shell::prompt();
     return true;
   }
@@ -112,7 +112,8 @@ bool Command::BuildinFunc(int i){
     return true;
   }
   //change directory
-  if ( !strcmp(cmd->c_str(),"cd") ) {
+  if ( !strcmp(temp_arg->c_str(),"cd") ) {
+    int error;
     if (_simpleCommands[i]->_arguments.size()==1) {
       error = chdir(getenv("HOME"));
     }
@@ -124,7 +125,7 @@ bool Command::BuildinFunc(int i){
       perror("cd");
     }
     clear();
-    Shell:prompt();
+    Shell::prompt();
     return true;
   }
 
