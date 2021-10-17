@@ -900,7 +900,7 @@ YY_RULE_SETUP
     }
   }
   yylval.cpp_string = new std::string(temp_string);
-  temp_string.clear()
+  temp_string.clear();
   return WORD;
 }
 	YY_BREAK
