@@ -140,7 +140,7 @@ iomodifier_opt:
   }
   || TWOGREAT WORD{
     //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
-    Shell::_currentCommand.redirect(2, $2);
+    Shell::_currentCommand._errFile = $2;
   }
   ;
 
