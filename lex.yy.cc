@@ -909,7 +909,10 @@ YY_RULE_SETUP
   //Quotes
 
   std::string str = yytext;
+  prinf(str)
+  printf("after")
   str = str.substr(1,str.length()-2);
+  printf(str)
   yylval.cpp_string = new std::string(str);
   return WORD;
 }
@@ -917,7 +920,7 @@ YY_RULE_SETUP
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 86 "shell.l"
+#line 89 "shell.l"
 {
   //escape
   std::string str = std::string(yytext);
@@ -932,7 +935,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 98 "shell.l"
+#line 101 "shell.l"
 {
     return NOTOKEN;
 
@@ -940,10 +943,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 103 "shell.l"
+#line 106 "shell.l"
 ECHO;
 	YY_BREAK
-#line 947 "lex.yy.cc"
+#line 950 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1960,4 +1963,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 103 "shell.l"
+#line 106 "shell.l"

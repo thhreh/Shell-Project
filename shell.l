@@ -78,7 +78,7 @@ void myunputc(int c) {
   //Quotes
 
   std::string str = yytext;
-  prinf(str)
+  printf(str)
   printf("after")
   str = str.substr(1,str.length()-2);
   printf(str)
