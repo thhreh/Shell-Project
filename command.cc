@@ -197,6 +197,9 @@ void Command::execute() {
     //treverse trough simple commands
     int ret;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
+      if (buildinFunc(i)) {
+        return;
+      }
       dup2(fdin, 0);
       close(fdin);
       if (i == _simpleCommands.size() - 1) {
