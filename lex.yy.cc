@@ -922,10 +922,10 @@ YY_RULE_SETUP
 {
   //escape
   std::string str = std::string(yytext);
-  std::size_t charescap = str.find('\\');
+  std::size_t charescap = str.find('\');
   while(charescap!=-1) {
     str = str.substr(0,charescap) + str.substr(charescap+1,std::string::npos);
-    charescap = str.find('\\', charescap+1);
+    charescap = str.find('\', charescap+1);
   }
   yylval.cpp_string = new std::string(str);
   return WORD;

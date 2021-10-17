@@ -84,15 +84,17 @@ void myunputc(int c) {
   return WORD;
 }
 
-[^ \\\t\n]*(\\[^nt])((\\[^nt])|[^ \\\t\n])*  {
+([^ \t\n<>\|\&\"\(\)]|\\.)+  {
   //escape
-  std::string str = std::string(yytext);
-  std::size_t charescap = str.find('\');
-  while(charescap!=-1) {
-    str = str.substr(0,charescap) + str.substr(charescap+1,std::string::npos);
-    charescap = str.find('\', charescap+1);
+  //temp_string
+  std::string temp_string = "";
+  for(int index = 0; yytext[index] != '\0'; index++){
+    if(!(yytext[index] == '\\' && yytext[index+1] != ' ')){
+      temp_string += yytext[index];
+    }
   }
-  yylval.cpp_string = new std::string(str);
+  yylval.cpp_string = new std::string(temp_string);
+  
   return WORD;
 }
 
