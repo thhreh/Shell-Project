@@ -31,6 +31,10 @@ void myunputc(int c) {
   /* Discard spaces and tabs */
 }
 
+"2>" {
+  return TWOGREAT;
+}
+
 "|" {
   return PIPE;
 }

@@ -28,7 +28,7 @@
 }
 
 %token <cpp_string> WORD
-%token NOTOKEN GREAT NEWLINE LESS AMPERSAND PIPE GREATGREAT GREATAMPERSAND GREATGREATAMPERSAND
+%token NOTOKEN GREAT NEWLINE LESS AMPERSAND PIPE GREATGREAT GREATAMPERSAND GREATGREATAMPERSAND TWOGREAT
 
 %{
 //#define yylex yylex
@@ -137,6 +137,10 @@ iomodifier_opt:
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
       Shell::_currentCommand._outFile = $2;
       Shell::_currentCommand._append = true;
+  }
+  || TWOGREAT WORD{
+    //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+    Shell::_currentCommand.redirect(2, $2);
   }
   ;
 
