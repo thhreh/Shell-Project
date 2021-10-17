@@ -107,28 +107,21 @@ bool Command::BuildinFunc(int i){
   }
   //unset enviromental var
   if ( !strcmp(temp_arg->c_str(),"unsetenv") ) {
-    printf( "Good bye1!!\n");
     if(unsetenv(_simpleCommands[i]->_arguments[1]->c_str())){
       perror("unsetenv");
     }
     clear();
-    printf( "Good bye2!!\n");
     Shell::prompt();
-    printf( "Good bye3!!\n");
     return true;
   }
   //change directory
   if ( !strcmp(temp_arg->c_str(),"cd") ) {
     int error;
     if (_simpleCommands[i]->_arguments.size()==1) {
-      error = chdir(getenv("HOME"));
+      chdir(getenv("HOME"));
     }
     else{
-      error = chdir(_simpleCommands[i]->_arguments[1]->c_str());
-    }
-
-    if (error < 0) {
-      perror("cd");
+      chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     clear();
     Shell::prompt();
