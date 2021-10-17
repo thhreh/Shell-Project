@@ -82,6 +82,48 @@ void myunputc(int c) {
   int fdpipeout[2];
   pipe(fdpipeout);
 
+  write(fdpipein[1], subshell, strlen(subshell));
+  write(fdpipein[1], "\n", 1);
+  close(fdpipein[1]);
+
+  dup2(fdpipein[0], 0);
+  close(fdpipein[0]);
+  dup2(fdpipeout[1], 1);
+  close(fdpipeout[1]);
+
+  int ret = fork();
+  if (ret == 0) {
+    char ** null_ptr = NULL;
+    execvp("/proc/self/exe", null_ptr);
+    _exit(1);
+  } 
+  else if (ret < 0) {
+    perror("fork");
+    exit(1);
+  }
+  dup2(defaultin, 0);
+  dup2(defaultout, 1);
+  close(defaultin);
+  close(defaultout);
+
+  char c;
+  char * buffer = (char *) malloc (4096);~
+  int i = 0;
+
+  while (read(fdpipeout[0], &c, 1)) {
+    if (c == '\n') {
+      buffer[i++] = ' ';
+    }
+    else{
+      buffer [i++] = c;
+    }
+  }
+  buffer[i] = '\0';
+
+  int j = i - 1;
+  for (j = i - 1; j >= 0; j--) {
+    myunputc(buffer[j]);
+  }
 
 }
 
