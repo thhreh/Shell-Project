@@ -300,10 +300,10 @@ void Command::execute() {
           int k = 0;
           while (read(fdpipeout[0], &temp_char, 1)) {
             if (temp_char != '\n') {
-              buffer[i++] = temp_char;
+              buffer[k++] = temp_char;
             }
           }
-          buffer[i] = '\0';
+          buffer[k] = '\0';
           printf("%s\n", buffer);
 
         }
