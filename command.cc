@@ -95,7 +95,6 @@ void Command::print() {
 
 bool Command::BuildinFunc(int i){
   std::string* temp_arg = _simpleCommands[i]->_arguments[0];
-  int fderrr;
   //set enviromental var
   if ( !strcmp(temp_arg->c_str(),"setenv") ) {
     if ( _simpleCommands[i]->_arguments.size() != 3 ) {
@@ -264,19 +263,66 @@ void Command::execute() {
           }
           exit(0);
         }
+        if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "source")) {
+          FILE * my_file = fopen(_simpleCommands[i]->_arguments[1]->c_str(), "r");
+          char cmdline[1024];
+          fgets(cmdline,1023,my_file);
+          fclose(my_file);
+          int tempin = dup(0);
+          int tempout = dup(1);
 
-
-
-
-        char ** x = new char*[argsize+1];
-        for (size_t j = 0; j<argsize;j++){
-          x[j] = (char *)_simpleCommands[i]->_arguments[j]->c_str();
-          x[j][strlen(_simpleCommands[i]->_arguments[j]->c_str())] = '\0';
+          int fdpipein[2];
+          int fdpipeout[2];
+          pipe(fdpipein);
+          pipe(fdpipeout);
+          write(fdpipein[1], cmdline, strlen(cmdline));
+          write(fdpipein[1], "\n", 1);
+          close(fdpipein[1]);
+          dup2(fdpipein[0], 0);
+          close(fdpipein[0]);
+          dup2(fdpipeout[1], 1);
+          close(fdpipeout[1]);
+          int ret1 = fork();
+          if (ret1 == 0) {
+            execvp("/proc/self/exe", NULL);
+            _exit(1);
+          }
+          else if (ret1 < 0) {
+            perror("fork\n");
+            exit(1);
+          }
+          dup2(tempin, 0);
+          dup2(tempout, 1);
+          close(tempin);
+          close(tempout);
+          char temp_char;
+          char * buffer = (char *)malloc(4096);
+          int k = 0;
+          while (read(fdpipeout[0], &temp_char, 1)) {
+            if (temp_char != '\n') {
+              buffer[i++] = temp_char;
+            }
+          }
+          buffer[i] = '\0';
+          printf("%s\n", buffer);
 
         }
-        x[argsize] = NULL;
-        execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
-        exit(1);
+        else{
+        
+
+
+
+
+          char ** x = new char*[argsize+1];
+          for (size_t j = 0; j<argsize;j++){
+            x[j] = (char *)_simpleCommands[i]->_arguments[j]->c_str();
+            x[j][strlen(_simpleCommands[i]->_arguments[j]->c_str())] = '\0';
+
+          }
+          x[argsize] = NULL;
+          execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
+          exit(1);
+        }
       }
     }
     //redirect stdout
