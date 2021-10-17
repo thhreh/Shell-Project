@@ -904,12 +904,54 @@ YY_RULE_SETUP
   int fdpipeout[2];
   pipe(fdpipeout);
 
+  write(fdpipein[1], subshell, strlen(subshell));
+  write(fdpipein[1], "\n", 1);
+  close(fdpipein[1]);
+
+  dup2(fdpipein[0], 0);
+  close(fdpipein[0]);
+  dup2(fdpipeout[1], 1);
+  close(fdpipeout[1]);
+
+  int ret = fork();
+  if (ret == 0) {
+    char ** null_ptr = NULL;
+    execvp("/proc/self/exe", null_ptr);
+    _exit(1);
+  } 
+  else if (ret < 0) {
+    perror("fork");
+    exit(1);
+  }
+  dup2(defaultin, 0);
+  dup2(defaultout, 1);
+  close(defaultin);
+  close(defaultout);
+
+  char c;
+  char * buffer = (char *) malloc (4096);~
+  int i = 0;
+
+  while (read(fdpipeout[0], &c, 1)) {
+    if (c == '\n') {
+      buffer[i++] = ' ';
+    }
+    else{
+      buffer [i++] = c;
+    }
+  }
+  buffer[i] = '\0';
+
+  int j = i - 1;
+  for (j = i - 1; j >= 0; j--) {
+    myunputc(buffer[j]);
+  }
 
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 92 "shell.l"
+#line 134 "shell.l"
 {
   //Quotes
   yylval.cpp_string = new std::string(yytext);
@@ -921,7 +963,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 101 "shell.l"
+#line 143 "shell.l"
 {
   //escape
   //temp_string
@@ -939,7 +981,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 117 "shell.l"
+#line 159 "shell.l"
 {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -947,7 +989,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 122 "shell.l"
+#line 164 "shell.l"
 {
     return NOTOKEN;
 
@@ -955,10 +997,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 128 "shell.l"
+#line 170 "shell.l"
 ECHO;
 	YY_BREAK
-#line 962 "lex.yy.cc"
+#line 1004 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1975,4 +2017,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 128 "shell.l"
+#line 170 "shell.l"

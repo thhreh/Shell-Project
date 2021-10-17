@@ -75,6 +75,7 @@ void myunputc(int c) {
   //remove paren
   std::size_t index = str.find(")");
   std::string temp_string = str.substr(0,index-2);
+  char *subshell = const_cast<char*> (temp_string.c_str());
   int defaultin = dup(0);
   int defaultout = dup(1);
   int fdpipein[2];
@@ -107,7 +108,7 @@ void myunputc(int c) {
   close(defaultout);
 
   char c;
-  char * buffer = (char *) malloc (4096);~
+  char * buffer = (char *) malloc (4096);
   int i = 0;
 
   while (read(fdpipeout[0], &c, 1)) {
