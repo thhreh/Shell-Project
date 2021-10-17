@@ -89,7 +89,7 @@ void myunputc(int c) {
   //temp_string
   std::string temp_string = "";
   for(int index = 0; yytext[index] != '\0'; index++){
-    if(!(yytext[index] == '\\' && yytext[index+1] != ' ')){
+    if(!(yytext[index] =='\' && yytext[index+1] != ' ')){
       temp_string += yytext[index];
     }
   }
