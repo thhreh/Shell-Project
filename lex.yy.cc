@@ -909,10 +909,10 @@ YY_RULE_SETUP
   //Quotes
 
   std::string str = yytext;
-  printf(str)
+  printf(str->c_str)
   printf("after")
   str = str.substr(1,str.length()-2);
-  printf(str)
+  printf(str->c_str)
   yylval.cpp_string = new std::string(str);
   return WORD;
 }
