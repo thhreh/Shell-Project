@@ -177,6 +177,7 @@ void Command::execute() {
         //dup2(fderr, 2);
         //close(fderr);
       //}
+      }
       else {
       //if it is not the last command, pipe
         int fdpipe[2];
@@ -225,7 +226,7 @@ void Command::execute() {
 
     // Print new prompt
     Shell::prompt();
-}
+
 }
 
 SimpleCommand * Command::_currentSimpleCommand;
