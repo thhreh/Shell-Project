@@ -908,8 +908,7 @@ YY_RULE_SETUP
 {
   //Quotes
 
-  std::string str = yytext;
-  yylval.cpp_string = str
+  yylval.cpp_string = new std::string(yytext);
   printf("before, string = %s\n",yylval.cpp_string)
   *yylval.cpp_string = yylval.cpp_string->substr(1, yylval.cpp_string->length()-2);
   printf("after, string = %s\n",yylval.cpp_string)
@@ -919,7 +918,7 @@ YY_RULE_SETUP
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 88 "shell.l"
+#line 87 "shell.l"
 {
   //escape
   std::string str = std::string(yytext);
@@ -934,7 +933,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 100 "shell.l"
+#line 99 "shell.l"
 {
     return NOTOKEN;
 
@@ -942,10 +941,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 105 "shell.l"
+#line 104 "shell.l"
 ECHO;
 	YY_BREAK
-#line 949 "lex.yy.cc"
+#line 948 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1962,4 +1961,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 105 "shell.l"
+#line 104 "shell.l"
