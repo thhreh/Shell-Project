@@ -383,10 +383,10 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[40] =
     {   0,
-        0,    0,   16,   11,    2,    1,   11,    8,   11,    7,
-        5,   11,    4,   11,   11,   11,   11,    0,   11,   11,
-       11,    3,    9,    6,   11,   11,   13,   11,   12,   11,
-       11,   11,   11,   13,   11,   10,   11,   12,    0
+        0,    0,   16,   13,    2,    1,   13,    8,   13,    7,
+        5,   12,    4,   13,   13,   12,   13,    0,   11,   13,
+       12,    3,    9,    6,   12,   12,   12,   12,   11,   11,
+       12,   11,   12,   12,   12,   10,   11,   11,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -881,15 +881,6 @@ case 11:
 YY_RULE_SETUP
 #line 70 "shell.l"
 {
-  /* Assume that file names have only alpha chars */
-  yylval.cpp_string = new std::string(yytext);
-  return WORD;
-}
-	YY_BREAK
-case 12:
-YY_RULE_SETUP
-#line 77 "shell.l"
-{
   //Quotes
   yylval.cpp_string = new std::string(yytext);
   //printf("before, string = %s\n",yylval.cpp_string);
@@ -898,9 +889,9 @@ YY_RULE_SETUP
   return WORD;
 }
 	YY_BREAK
-case 13:
+case 12:
 YY_RULE_SETUP
-#line 86 "shell.l"
+#line 79 "shell.l"
 {
   //escape
   //temp_string
@@ -916,9 +907,17 @@ YY_RULE_SETUP
   return WORD;
 }
 	YY_BREAK
+case 13:
+YY_RULE_SETUP
+#line 95 "shell.l"
+{
+  yylval.cpp_string = new std::string(yytext);
+  return WORD;
+}
+	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 101 "shell.l"
+#line 100 "shell.l"
 {
     return NOTOKEN;
 
@@ -929,7 +928,7 @@ YY_RULE_SETUP
 #line 106 "shell.l"
 ECHO;
 	YY_BREAK
-#line 933 "lex.yy.cc"
+#line 932 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
