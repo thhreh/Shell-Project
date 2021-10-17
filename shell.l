@@ -84,7 +84,7 @@ void myunputc(int c) {
   return WORD;
 }
 
-([^ \t\n<>\|\&\"\(\)]|\\.)+  {
+[^ \t\n|><&]*\\[^ \t\n]*  {
   //escape
   //temp_string
   printf("hello?");
