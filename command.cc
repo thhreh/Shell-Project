@@ -152,9 +152,9 @@ void Command::execute() {
       printf( "Good bye!!\n");
       exit(1);
     }
-    //if(BuildinFunc(0)){
-    //  return;
-    //}
+    if(BuildinFunc(0)){
+      return;
+    }
 
 
     // Add execution here
@@ -200,9 +200,9 @@ void Command::execute() {
     //treverse trough simple commands
     int ret;
     for (size_t i = 0; i < _simpleCommands.size(); i++) {
-      if (BuildinFunc(i)) {
-        return;
-      }
+      //if (BuildinFunc(i)) {
+      //  return;
+      //}
       dup2(fdin, 0);
       close(fdin);
       if (i == _simpleCommands.size() - 1) {
