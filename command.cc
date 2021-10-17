@@ -93,7 +93,7 @@ void Command::print() {
     printf( "\n\n" );
 }
 
-bool Command::BuildinFunc(i){
+bool Command::BuildinFunc(int i){
   std::string* temp_arg = _simpleCommands[i]->_arguments[0];
   //set enviromental var
   if ( !strcmp(temp_arg->c_str(),"setenv") ) {
