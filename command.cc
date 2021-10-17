@@ -163,20 +163,19 @@ void Command::execute() {
         } else if(!_outFile){
           fdout = dup(defaultout);
         }
-        //if(_errFile){
-          //const char* errfile = _errFile->c_str();
-          //if(_append){
-            //fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
-          //}
-          //else {
-            //fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
-          //}
-        //} else if(!_errFile){
-          //fderr = dup(defaulterr);
-        //}
-        //dup2(fderr, 2);
-        //close(fderr);
-      //}
+        if(_errFile){
+          const char* errfile = _errFile->c_str();
+          if(_append){
+            fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+          }
+          else {
+            fderr = open(errfile, O_CREAT|O_WRONLY|O_APPEND, 0664);
+          }
+        } else if(!_errFile){
+          fderr = dup(defaulterr);
+        }
+        dup2(fderr, 2);
+        close(fderr);
       }
       else {
       //if it is not the last command, pipe
