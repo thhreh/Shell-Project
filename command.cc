@@ -149,9 +149,9 @@ void Command::execute() {
       printf( "Good bye!!\n");
       exit(1);
     }
-    if(BuildinFunc(0)){
-      return;
-    }
+    //if(BuildinFunc(0)){
+    //  return;
+    //}
 
 
     // Add execution here
