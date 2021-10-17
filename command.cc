@@ -124,7 +124,7 @@ bool Command::BuildinFunc(int i){
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     if(notfound < 0){
-      printf("");
+      perror("cd")
     }
     clear();
     Shell::prompt();
