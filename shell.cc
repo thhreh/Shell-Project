@@ -13,7 +13,6 @@ void Shell::prompt() {
 }
 
 extern "C" void signalHandle(int sig) {
-  Shell::_currentCommand.clear();
   printf("\n");
   Shell::prompt();
   
@@ -24,10 +23,22 @@ int main() {
   sig.sa_handler = signalHandle;
   sigemptyset(&sig.sa_mask);
   sig.sa_flags = SA_RESTART;
+  if(sigaction(SIGINT, &sig, NULL)){
+    perror("sigaction");
+    exit(2);
+  }
 
+  FILE*fd = fopen(".shellrc", "r");
+  if (fd) {
+    yyrestart(fd);
+    yyparse();
+    yyrestart(stdin);
+    fclose(fd);
+  }
+  else{
 
-
-  Shell::prompt();
+    Shell::prompt();
+  }
   yyparse();
 }
 
