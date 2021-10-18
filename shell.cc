@@ -20,8 +20,8 @@ extern "C" void signalHandle(int sig){
 
 extern "C" void zombie(int sig) {
   int pid = wait3(0, 0, NULL);
-  printf("[%d] exited.\n", pid);
   while (waitpid(-1, NULL, WNOHANG) > 0) {};
+  printf("[%d] exited.\n", pid);
 
 }
 
@@ -29,7 +29,7 @@ int main() {
   if(isatty(STDIN_FILENO)) {
     system("/homes/tbagwel/cs252/lab3-src/.shellrc");
   }
-  
+  //ctrl C handle
   struct sigaction sig;
   sig.sa_handler = signalHandle;
   sigemptyset(&sig.sa_mask);
@@ -39,6 +39,8 @@ int main() {
     perror("sigaction");
     exit(2);
   }
+
+  //when background is true, handle zombie
   if (Shell::_currentCommand._background == true) {
     struct sigaction Zombie;
     Zombie.sa_handler = zombie;
@@ -46,7 +48,7 @@ int main() {
     Zombie.sa_flags = SA_RESTART;
     if (sigaction(SIGCHLD, &Zombie, NULL)) {
       perror("sigaction");
-      exit(2);
+      exit(-1);
     }
   }
 
