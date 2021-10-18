@@ -19,13 +19,11 @@ extern "C" void signalHandle(int sig) {
     Shell::prompt();
   }
   if (sig == SIGCHLD) {
-    printf("happening");
-    pid_t pid = waitpid(-1, NULL, WNOHANG);
-    for (unsigned i=0; i<Shell::_bgPIDs.size(); i++) {
-      if (pid == Shell::_bgPIDs[i]) {
-        printf("[%d] exited\n", pid);
-        Shell::_bgPIDs.erase(Shell::_bgPIDs.begin()+i);
-        break;
+    if (Shell::_currentCommand._background == true) {
+      int pid = wait3(0, 0, NULL);
+      printf("[%d] exited.\n", pid);
+      while (pid > 0) {
+        pid = waitpid(-1, NULL, WNOHANG)
       }
     }
   }
