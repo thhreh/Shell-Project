@@ -20,8 +20,14 @@ extern "C" void signalHandle(int sig){
 } 
 // one message a time
 extern "C" void zombie(int sig) {
-  int pid = wait3(0, 0, NULL);
-  printf("[%d] exited.\n", pid);
+  pid_t pid = waitpid(-1, NULL, WNOHANG);
+  for (unsigned i=0; i<Shell::_PIDs.size(); i++) {
+    if (pid == Shell::PIDs[i]) {
+      printf("[%d] exited\n", pid);
+      Shell::_PIDs.erase(Shell::_PIDs.begin()+i);
+      break;
+    }
+  }
 
 }
 
@@ -54,3 +60,4 @@ int main() {
 }
 
 Command Shell::_currentCommand;
+std::vector<int> Shell::_bgPIDs;
