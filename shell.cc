@@ -45,3 +45,4 @@ int main() {
 }
 
 Command Shell::_currentCommand;
+std::vector<int> Shell::_bgPIDs;
