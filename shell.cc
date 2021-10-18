@@ -12,12 +12,12 @@ void Shell::prompt() {
   }
   fflush(stdout);
 }
-
+//when ctrl C is processing 
 extern "C" void signalHandle(int sig){
     printf("\n");
     Shell::prompt();
 } 
-
+// one message a time
 extern "C" void zombie(int sig) {
   int pid = wait3(0, 0, NULL);
   while (waitpid(-1, NULL, WNOHANG) > 0) {};

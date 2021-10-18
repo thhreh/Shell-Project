@@ -135,6 +135,7 @@ bool Command::BuildinFunc(int i){
     
       }
       else{
+        //error message for cd
         std::string error = "cd: can't cd to ";
         error.append(_simpleCommands[i]->_arguments[1]->c_str());
         fprintf(stderr,"%s\n",error.c_str());
@@ -267,7 +268,7 @@ void Command::execute() {
          exit(2);
       }
       else if(ret == 0) {
-            //Convert std::vector<std::string *> _arguments into char**
+            //printenv function
         if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "printenv")) {
           char ** envvar = environ;
           int j = 0;
@@ -277,51 +278,8 @@ void Command::execute() {
           }
           exit(0);
         }
-        //if (!strcmp(_simpleCommands[i]->_arguments[0]->c_str(), "source")) {
-          //FILE * my_file = fopen(_simpleCommands[i]->_arguments[1]->c_str(), "r");
-          //char cmdline[1024];
-          //fgets(cmdline,1023,my_file);
-          //fclose(my_file);
-          //int tempin = dup(0);
-          //int tempout = dup(1);
-
-          //int fdpipein[2];
-          //int fdpipeout[2];
-          //pipe(fdpipein);
-          //pipe(fdpipeout);
-          //write(fdpipein[1], cmdline, strlen(cmdline));
-          //write(fdpipein[1], "\n", 1);
-          //close(fdpipein[1]);
-         // dup2(fdpipein[0], 0);
-          //close(fdpipein[0]);
-          //dup2(fdpipeout[1], 1);
-          //close(fdpipeout[1]);
-          //int ret1 = fork();
-          //if (ret1 == 0) {
-            //char ** null_ptr = NULL;
-            //execvp("/proc/self/exe", null_ptr);
-           // _exit(1);
-          //}
-          //else if (ret1 < 0) {
-            //perror("fork\n");
-           // exit(1);
-          //}
-          //dup2(tempin, 0);
-          //dup2(tempout, 1);
-          //close(tempin);
-          //close(tempout);
-          //char temp_char;
-          //char * buffer = (char *)malloc(4096);
-          //int k = 0;
-          //while (read(fdpipeout[0], &temp_char, 1)) {
-            //if (temp_char != '\n') {
-            //  buffer[k++] = temp_char;
-           // }
-          //}
-          //buffer[k] = '\0';
-          //printf("%s\n", buffer);
-
-        //}
+        
+      
         
         
 
