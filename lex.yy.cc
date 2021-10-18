@@ -1021,18 +1021,11 @@ YY_RULE_SETUP
     _file.clear();
 
   }
-  else{
-    std::string * temp = new std::string("SOURCE ERROR MATCH ");
-    temp->append(_file);
-    yylval.cpp_string = temp;
-    _file.clear();
-    return SOURCE_ERROR;
-  }
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 186 "shell.l"
+#line 179 "shell.l"
 {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -1040,7 +1033,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 191 "shell.l"
+#line 184 "shell.l"
 {
     return NOTOKEN;
 
@@ -1048,10 +1041,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 197 "shell.l"
+#line 190 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1055 "lex.yy.cc"
+#line 1048 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2068,4 +2061,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 197 "shell.l"
+#line 190 "shell.l"
