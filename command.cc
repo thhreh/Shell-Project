@@ -307,6 +307,8 @@ void Command::execute() {
       waitpid(ret, NULL, 0);
     }
     else{
+      std::string s = std::to_string(ret);
+      setenv("!", s.c_str(), 1);
       Shell::_PIDs.push_back(ret);
     }
     // Clear to prepare for next command
