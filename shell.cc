@@ -20,7 +20,7 @@ extern "C" void signalHandle(int sig) {
 }
 
 extern "C" void zombieHandle(int sig) {
-  int ret = wait3(0, 0, NULL);
+  wait3(0, 0, NULL);
   while (waitpid(-1, NULL, WNOHANG) > 0);
 
 }
@@ -45,17 +45,7 @@ int main() {
     }
   }
 
-  FILE*fd = fopen(".shellrc", "r");
-  if (fd) {
-    yyrestart(fd);
-    yyparse();
-    yyrestart(stdin);
-    fclose(fd);
-  }
-  else{
-
-    Shell::prompt();
-  }
+  Shell::prompt();
   yyparse();
 }
 
