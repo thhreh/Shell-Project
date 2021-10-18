@@ -1008,7 +1008,9 @@ YY_RULE_SETUP
 
   //source call
   std::string _file = yytext;
+  printf("BUY!");
   _file = _file.substr(7, _file.size()-7);
+
 
   FILE * file = fopen(_file.c_str(), "r");
 
@@ -1025,7 +1027,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 179 "shell.l"
+#line 181 "shell.l"
 {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -1033,7 +1035,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 184 "shell.l"
+#line 186 "shell.l"
 {
     return NOTOKEN;
 
@@ -1041,10 +1043,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 190 "shell.l"
+#line 192 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1048 "lex.yy.cc"
+#line 1050 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2061,4 +2063,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 190 "shell.l"
+#line 192 "shell.l"
