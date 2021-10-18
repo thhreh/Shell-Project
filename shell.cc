@@ -21,8 +21,7 @@ extern "C" void signalHandle(int sig) {
 
 extern "C" void zombieHandle(int sig) {
   int ret = wait3(0, 0, NULL);
-  printf("[%d] exited.\n", ret);
-  while (waitpid(-1, NULL, WNOHANG) > 0) {};
+  while (waitpid(-1, NULL, WNOHANG) > 0);
 
 }
 
