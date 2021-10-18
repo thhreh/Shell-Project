@@ -156,6 +156,32 @@ void myunputc(int c) {
   return WORD;
 }
 
+source([\ ][^ \n\t]*[^\ \n\t]) {
+
+  //source call
+  std::string _file = yytext;
+  _file = _file.substr(7, _file.size()-7);
+
+  FILE * file = fopen(_file.c_str(), "r");
+
+  if(file != NULL){
+    YY_BUFFER_STATE state = yy_create_buffer(file, YY_BUF_SIZE);
+    yypush_buffer_state(state);
+    yyparse();
+    yypop_buffer_state();
+    fclose(file);
+    _file.clear();
+
+  }
+  else{
+    std::string * temp = new std::string("SOURCE ERROR MATCH ");
+    temp->append(_file);
+    yylval.cpp_string = temp;
+    _file.clear();
+    return SOURCE_ERROR;
+  }
+}
+
 
 [^ \t\n|><][^ \t\n|><]*  {
   yylval.cpp_string = new std::string(yytext);
