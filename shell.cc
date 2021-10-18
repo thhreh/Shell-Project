@@ -19,7 +19,7 @@ extern "C" void signalHandle(int sig) {
     Shell::prompt();
   }
   if (sig == SIGCHLD) {
-    printf("happening")
+    printf("happening");
     pid_t pid = waitpid(-1, NULL, WNOHANG);
     for (unsigned i=0; i<Shell::_bgPIDs.size(); i++) {
       if (pid == Shell::_bgPIDs[i]) {
