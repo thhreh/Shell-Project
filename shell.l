@@ -165,7 +165,7 @@ source([\ ][^ \n\t]*[^\ \n\t]) {
   //printf("BUY!");
   _file = _file.substr(7, _file.size()-7);
 
-
+  //open file for read
   FILE * file = fopen(_file.c_str(), "r");
 
   if(file != NULL){
