@@ -173,13 +173,6 @@ source([\ ][^ \n\t]*[^\ \n\t]) {
     _file.clear();
 
   }
-  else{
-    std::string * temp = new std::string("SOURCE ERROR MATCH ");
-    temp->append(_file);
-    yylval.cpp_string = temp;
-    _file.clear();
-    return SOURCE_ERROR;
-  }
 }
 
 
