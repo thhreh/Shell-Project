@@ -347,6 +347,9 @@ void Command::execute() {
     if (!_background) {
       waitpid(ret, NULL, 0);
     }
+    else{
+      Shell::_bgPIDs.push_back(ret);
+    }
     // Clear to prepare for next command
     clear();
 
