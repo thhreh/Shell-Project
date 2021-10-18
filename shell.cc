@@ -14,7 +14,7 @@ void Shell::prompt() {
 }
 
 extern "C" void signalHandle(int sig) {
-  if(if (sig == SIGINT) {
+  if (sig == SIGINT) {
     printf("\n");
     Shell::prompt();
   }
@@ -28,7 +28,6 @@ extern "C" void signalHandle(int sig) {
       }
     }
   }
-  
 }
 
 int main() {
