@@ -129,7 +129,10 @@ bool Command::BuildinFunc(int i){
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     if(notfound < 0){
-      chdir(getenv("HOME"));
+      std::string error = "cd: can't cd to "
+      error.append(_simpleCommands[i]->_arguments[1]->c_str());
+      fprintf(stderr,"%s\n",error.c_str());
+
     }
     clear();
     Shell::prompt();
