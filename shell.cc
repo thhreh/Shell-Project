@@ -23,7 +23,7 @@ extern "C" void signalHandle(int sig) {
       int pid = wait3(0, 0, NULL);
       printf("[%d] exited.\n", pid);
       while (pid > 0) {
-        pid = waitpid(-1, NULL, WNOHANG)
+        pid = waitpid(-1, NULL, WNOHANG);
       }
     }
   }
