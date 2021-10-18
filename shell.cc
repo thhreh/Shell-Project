@@ -26,6 +26,10 @@ extern "C" void zombie(int sig) {
 }
 
 int main() {
+  if(isatty(STDIN_FILENO)) {
+    system("/homes/tbagwel/cs252/lab3-src/.shellrc");
+  }
+  
   struct sigaction sig;
   sig.sa_handler = signalHandle;
   sigemptyset(&sig.sa_mask);
