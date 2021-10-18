@@ -131,8 +131,6 @@ bool Command::BuildinFunc(int i){
     if(notfound < 0){
       if(!strcmp(_simpleCommands[i]->_arguments[1]->c_str(),"${HOME}")){
         chdir(getenv("HOME"));
-        
-    
       }
       else{
         //error message for cd
@@ -307,8 +305,6 @@ void Command::execute() {
       waitpid(ret, NULL, 0);
     }
     else{
-      std::string s = std::to_string(ret);
-      setenv("!", s.c_str(), 1);
       Shell::_PIDs.push_back(ret);
     }
     // Clear to prepare for next command
