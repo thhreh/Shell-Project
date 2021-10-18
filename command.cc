@@ -120,17 +120,16 @@ bool Command::BuildinFunc(int i){
     if (_simpleCommands[i]->_arguments.size()==1) {
       chdir(getenv("HOME"));
     }
-    else if (_simpleCommands[i]->_arguments.size()==2){
-      if(!strcmp(_simpleCommands[i]->_arguments[1]->c_str(),"${HOME}")){
-        chdir(getenv("HOME"));
-      }
-    }
+    //else if (_simpleCommands[i]->_arguments.size()==2){
+      //if(!strcmp(_simpleCommands[i]->_arguments[1]->c_str(),"${HOME}")){
+       // chdir(getenv("HOME"));
+      //}
+    //}
     else{
       notfound = chdir(_simpleCommands[i]->_arguments[1]->c_str());
     }
     if(notfound < 0){
-      perror("cd");
-      exit(2);
+      chdir(getenv("HOME"));
     }
     clear();
     Shell::prompt();
