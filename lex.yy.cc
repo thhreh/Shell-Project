@@ -897,6 +897,7 @@ YY_RULE_SETUP
   //remove paren
   std::size_t index = str.find(")");
   std::string temp_string = str.substr(0,index-2);
+  char *subshell = const_cast<char*> (temp_string.c_str());
   int defaultin = dup(0);
   int defaultout = dup(1);
   int fdpipein[2];
@@ -929,7 +930,7 @@ YY_RULE_SETUP
   close(defaultout);
 
   char c;
-  char * buffer = (char *) malloc (4096);~
+  char * buffer = (char *) malloc (4096);
   int i = 0;
 
   while (read(fdpipeout[0], &c, 1)) {
@@ -951,7 +952,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 134 "shell.l"
+#line 135 "shell.l"
 {
   //Quotes
   yylval.cpp_string = new std::string(yytext);
@@ -963,7 +964,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 143 "shell.l"
+#line 144 "shell.l"
 {
   //escape
   //temp_string
@@ -981,7 +982,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 159 "shell.l"
+#line 160 "shell.l"
 {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -989,7 +990,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 164 "shell.l"
+#line 165 "shell.l"
 {
     return NOTOKEN;
 
@@ -997,10 +998,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 170 "shell.l"
+#line 171 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1004 "lex.yy.cc"
+#line 1005 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2017,4 +2018,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 170 "shell.l"
+#line 171 "shell.l"
