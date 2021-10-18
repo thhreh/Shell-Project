@@ -8,8 +8,6 @@ struct Shell {
   static void prompt();
 
   static Command _currentCommand;
-
-  static std::vector<int> _bgPIDs;
 };
 
 #endif
