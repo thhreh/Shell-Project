@@ -21,7 +21,7 @@ extern "C" void signalHandle(int sig) {
 
 extern "C" void zombieHandle(int sig) {
   int ret = wait3(0, 0, NULL);
-  printf("[%d] exited.\n", pid);
+  printf("[%d] exited.\n", ret);
   while (waitpid(-1, NULL, WNOHANG) > 0) {};
 
 }
@@ -37,10 +37,10 @@ int main() {
   }
   if (Shell::_currentCommand._background == true) {
     struct sigaction Zombie;
-    sigZombie.sa_handler = zombieHandle;
-    sigemptyset(&sigZombie.sa_mask);
-    sigZombie.sa_flags = SA_RESTART;
-    if (sigaction(SIGCHLD, &sigZombie, NULL)) {
+    Zombie.sa_handler = zombieHandle;
+    sigemptyset(&Zombie.sa_mask);
+    Zombie.sa_flags = SA_RESTART;
+    if (sigaction(SIGCHLD, &Zombie, NULL)) {
       perror("sigaction");
       exit(2);
     }
