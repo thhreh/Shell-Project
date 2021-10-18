@@ -60,4 +60,4 @@ int main() {
 }
 
 Command Shell::_currentCommand;
-std::vector<int> Shell::_bgPIDs;
+std::vector<int> Shell::_PIDs;
