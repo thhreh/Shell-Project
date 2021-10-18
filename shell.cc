@@ -35,13 +35,15 @@ int main() {
     perror("sigaction");
     exit(2);
   }
-  struct sigaction Zombie;
-  Zombie.sa_handler = zombie;
-  sigemptyset(&Zombie.sa_mask);
-  Zombie.sa_flags = SA_RESTART;
-  if (sigaction(SIGCHLD, &Zombie, NULL)) {
-    perror("sigaction");
-    exit(2);
+  if (Shell::_currentCommand._background == true) {
+    struct sigaction Zombie;
+    Zombie.sa_handler = zombie;
+    sigemptyset(&Zombie.sa_mask);
+    Zombie.sa_flags = SA_RESTART;
+    if (sigaction(SIGCHLD, &Zombie, NULL)) {
+      perror("sigaction");
+      exit(2);
+    }
   }
 
 
