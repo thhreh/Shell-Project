@@ -121,7 +121,7 @@ bool Command::BuildinFunc(int i){
       chdir(getenv("HOME"));
     }
     else if (_simpleCommands[i]->_arguments.size()==2){
-      if(!strcmp(_simpleCommands[i]->_arguments[1]->c_str(),"${HOME}"){
+      if(!strcmp(_simpleCommands[i]->_arguments[1]->c_str(),"${HOME}")){
         chdir(getenv("HOME"));
       }
     }
