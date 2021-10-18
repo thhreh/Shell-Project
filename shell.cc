@@ -22,7 +22,7 @@ extern "C" void signalHandle(int sig){
 extern "C" void zombie(int sig) {
   pid_t pid = waitpid(-1, NULL, WNOHANG);
   for (unsigned i=0; i<Shell::_PIDs.size(); i++) {
-    if (pid == Shell::PIDs[i]) {
+    if (pid == Shell::_PIDs[i]) {
       printf("[%d] exited\n", pid);
       Shell::_PIDs.erase(Shell::_PIDs.begin()+i);
       break;
