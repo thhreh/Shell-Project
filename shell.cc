@@ -13,6 +13,7 @@ void Shell::prompt() {
   fflush(stdout);
 }
 //when ctrl C is processing 
+
 extern "C" void signalHandle(int sig){
     printf("\n");
     Shell::prompt();
@@ -20,7 +21,6 @@ extern "C" void signalHandle(int sig){
 // one message a time
 extern "C" void zombie(int sig) {
   int pid = wait3(0, 0, NULL);
-  while (waitpid(-1, NULL, WNOHANG) > 0) {};
   printf("[%d] exited.\n", pid);
 
 }
@@ -46,10 +46,6 @@ int main() {
     Zombie.sa_handler = zombie;
     sigemptyset(&Zombie.sa_mask);
     Zombie.sa_flags = SA_RESTART;
-    if (sigaction(SIGCHLD, &Zombie, NULL)) {
-      perror("sigaction");
-      exit(-1);
-    }
   }
 
 

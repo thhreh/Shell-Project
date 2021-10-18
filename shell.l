@@ -75,9 +75,11 @@ void myunputc(int c) {
   //remove paren
   std::size_t index = str.find(")");
   std::string temp_string = str.substr(0,index-2);
+
   char *subshell = const_cast<char*> (temp_string.c_str());
   int defaultin = dup(0);
   int defaultout = dup(1);
+  //pipe
   int fdpipein[2];
   pipe(fdpipein);
   int fdpipeout[2];
@@ -91,7 +93,7 @@ void myunputc(int c) {
   close(fdpipein[0]);
   dup2(fdpipeout[1], 1);
   close(fdpipeout[1]);
-
+  
   int ret = fork();
   if (ret == 0) {
     char ** null_ptr = NULL;
@@ -110,7 +112,7 @@ void myunputc(int c) {
   char c;
   char * buffer = (char *) malloc (4096);
   int i = 0;
-
+  //transfer data to buffer
   while (read(fdpipeout[0], &c, 1)) {
     if (c == '\n') {
       buffer[i++] = ' ';

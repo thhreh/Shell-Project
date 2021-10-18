@@ -164,6 +164,7 @@ void Command::execute() {
     //exit shell
     std::string* cmd = _simpleCommands[0]->_arguments[0];
     if ( !strcmp(cmd->c_str(),"exit") ) {
+      printf("\n")
       printf( "Good bye!!\n");
       exit(1);
     }
