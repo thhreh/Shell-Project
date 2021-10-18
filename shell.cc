@@ -14,15 +14,21 @@ void Shell::prompt() {
 }
 
 extern "C" void signalHandle(int sig) {
-  printf("\n");
-  Shell::prompt();
+  if(if (sig == SIGINT) {
+    printf("\n");
+    Shell::prompt();
+  }
+  if (sig == SIGCHLD) {
+    pid_t pid = waitpid(-1, NULL, WNOHANG);~
+    for (unsigned i=0; i<Shell::_bgPIDs.size(); i++) {
+      if (pid == Shell::_bgPIDs[i]) {
+        printf("[%d] exited\n", pid);
+        Shell::_bgPIDs.erase(Shell::_bgPIDs.begin()+i);
+        break;
+      }
+    }
+  }
   
-}
-
-extern "C" void zombieHandle(int sig) {
-  wait3(0, 0, NULL);
-  while (waitpid(-1, NULL, WNOHANG) > 0);
-
 }
 
 int main() {
@@ -33,16 +39,6 @@ int main() {
   if(sigaction(SIGINT, &sig, NULL)){
     perror("sigaction");
     exit(2);
-  }
-  if (Shell::_currentCommand._background == true) {
-    struct sigaction Zombie;
-    Zombie.sa_handler = zombieHandle;
-    sigemptyset(&Zombie.sa_mask);
-    Zombie.sa_flags = SA_RESTART;
-    if (sigaction(SIGCHLD, &Zombie, NULL)) {
-      perror("sigaction");
-      exit(2);
-    }
   }
 
   Shell::prompt();
