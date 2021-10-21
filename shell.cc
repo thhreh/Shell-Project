@@ -32,9 +32,9 @@ extern "C" void zombie(int sig) {
 }
 
 int main() {
-  if(isatty(STDIN_FILENO)) {
-    system("/homes/tbagwel/cs252/lab3-src/.shellrc");
-  }
+  //if(isatty(STDIN_FILENO)) {
+    //system("/homes/tbagwel/cs252/lab3-src/.shellrc");
+  //}
   //ctrl C handle
   struct sigaction sig;
   sig.sa_handler = signalHandle;
