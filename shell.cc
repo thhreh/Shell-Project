@@ -45,7 +45,7 @@ int main() {
     Zombie.sa_handler = zombie;
     sigemptyset(&Zombie.sa_mask);
     Zombie.sa_flags = SA_RESTART;
-    if (sigaction(SIGCHLD, &sigZombie, NULL)) {
+    if (sigaction(SIGCHLD, &Zombie, NULL)) {
       perror("sigaction");
       exit(2);
     }
