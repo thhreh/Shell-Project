@@ -21,7 +21,7 @@ extern "C" void signalHandle(int sig){
 // one message a time
 extern "C" void zombie(int sig) {
   int pid = wait3(0, 0, NULL);
-  while(waitpid(-1,NULL,WNOHAND)>0){};
+  while(waitpid(-1,NULL,WNOHANG)>0){};
 
 }
 
