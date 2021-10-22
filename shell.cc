@@ -7,9 +7,9 @@ void yyrestart(FILE *file);
 int yyparse(void);
 
 void Shell::prompt() {
-  //if (isatty(0)) {
-    //printf("myshell>");
-  //}
+  if (isatty(0)) {
+    printf("myshell>");
+  }
   fflush(stdout);
 }
 //when ctrl C is processing 
@@ -32,9 +32,9 @@ extern "C" void zombie(int sig) {
 }
 
 int main() {
-  //if(isatty(STDIN_FILENO)) {
-    //system("/homes/tbagwel/cs252/lab3-src/.shellrc");
-  //}
+  if(isatty(STDIN_FILENO)) {
+    system("/homes/tbagwel/cs252/lab3-src/.shellrc");
+  }
   //ctrl C handle
   struct sigaction sig;
   sig.sa_handler = signalHandle;
