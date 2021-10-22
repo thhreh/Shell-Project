@@ -22,7 +22,6 @@ extern "C" void signalHandle(int sig){
 extern "C" void zombie(int sig) {
   int pid = wait3(0, 0, NULL);
   while(waitpid(-1,NULL,WNOHANG)>0){};
-
 }
 
 int main() {
@@ -41,12 +40,16 @@ int main() {
   }
 
   //when background is true, handle zombie
-  //if(Shell::_currentCommand._background == true) {
+  if(Shell::_currentCommand._background == true) {
     struct sigaction Zombie;
     Zombie.sa_handler = zombie;
     sigemptyset(&Zombie.sa_mask);
     Zombie.sa_flags = SA_RESTART;
-  //}
+    if (sigaction(SIGCHLD, &sigZombie, NULL)) {
+      perror("sigaction");
+      exit(2);
+    }
+  }
   
 
 
