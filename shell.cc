@@ -20,14 +20,8 @@ extern "C" void signalHandle(int sig){
 } 
 // one message a time
 extern "C" void zombie(int sig) {
-  pid_t pid = waitpid(-1, NULL, WNOHANG);
-  for (unsigned i=0; i<Shell::_PIDs.size(); i++) {
-    if (pid == Shell::_PIDs[i]) {
-      printf("[%d] exited\n", pid);
-      Shell::_PIDs.erase(Shell::_PIDs.begin()+i);
-      break;
-    }
-  }
+  int pid = wait3(0, 0, NULL);
+  while(waitpid(-1,NULL,WNOHAND)>0){};
 
 }
 
@@ -47,10 +41,12 @@ int main() {
   }
 
   //when background is true, handle zombie
-  struct sigaction Zombie;
-  Zombie.sa_handler = zombie;
-  sigemptyset(&Zombie.sa_mask);
-  Zombie.sa_flags = SA_RESTART;
+  //if(Shell::_currentCommand._background == true) {
+    struct sigaction Zombie;
+    Zombie.sa_handler = zombie;
+    sigemptyset(&Zombie.sa_mask);
+    Zombie.sa_flags = SA_RESTART;
+  //}
   
 
 
