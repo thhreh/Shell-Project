@@ -63,6 +63,25 @@ void myunputc(int c) {
   return GREATGREATAMPERSAND;
 }
 
+~[^ \n\t]* {
+  //tidle
+  std::string str = std::string(yytext);
+  std::string home_dir = getenv("HOME");
+  if (str.size() != 1) {
+    if (str[1] == '/') {
+      str = home_dir + str.substr(1, -1);
+    }
+    else {
+      str = std::string("/homes/") + str.substr(1,-1);
+    }
+    yylval.cpp_string = new std::string(str);
+  }
+  else{
+    yylval.cpp_string = new std::string(home);
+  }
+  return WORD;
+}
+
 \$\([^\n]*\) {
   //subshell
 
