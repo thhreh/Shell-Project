@@ -77,7 +77,7 @@ void myunputc(int c) {
     yylval.cpp_string = new std::string(str);
   }
   else{
-    yylval.cpp_string = new std::string(home);
+    yylval.cpp_string = new std::string(home_dir);
   }
   return WORD;
 }
