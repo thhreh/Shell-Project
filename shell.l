@@ -8,14 +8,8 @@
 
 %{
 
-#include <string>
 #include <cstring>
 #include "y.tab.hh"
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "unistd.h"
-#include "shell.hh"
 
 
 
@@ -25,20 +19,20 @@ void myunputc(int c) {
   unput(c);
 }
 
-std::string& expand_variables(std::string& input){
-  if(str.find("${") <= str.size()){
-    std::string left_substring = input.substr(0,input.find("${"));
-    std::string right_substring = input.substr(input.find("}")+strlen("}"));
-    std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
-    main = getexceptionenv(main);
-    input = left + main + expand_variables(right_substring);
-    left_substring.clear();
-    right_substring.clear();
-    main.clear();
-  }
-  return input;
+//std::string& expand_variables(std::string& input){
+ // if(str.find("${") <= str.size()){
+   // std::string left_substring = input.substr(0,input.find("${"));
+    //std::string right_substring = input.substr(input.find("}")+strlen("}"));
+    //std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
+    //main = getexceptionenv(main);
+    //input = left + main + expand_variables(right_substring);
+    //left_substring.clear();
+    //right_substring.clear();
+    //main.clear();
+  //}
+  //return input;
 
-}
+//}
 
 //std::string& getexceptionenv(std::string& variable){
  // std::string output;
@@ -203,15 +197,36 @@ std::string& expand_variables(std::string& input){
 
 $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
   std::string variable = yytext;
-  std::string *output = new std::string();
+  std::string result = "";
   if (variable.find("${") <= variable.size()){
-    *output = expand_variables(variable);
+    while(variable.find <= variable.size()){
+      result += variable.substr(0,input.find("${"));
+      std::string right_substring = variable.substr(variable.find("}")+strlen("}"));
+      std::string main = variable.substr(left.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
+      if(main.compare("$") == 0){
+        result += std:to_string(getpid());
+      }
+      else if(main.compare("SHELL") == 0){
+        char real_path[2048];
+        result += realpath("/proc/self/exe",real_path)
+
+      }
+      else{
+        char * temp = getenv(main.c_str());
+        if(!temp) {
+          result += main.c_str();
+        }else{
+          result += temp;
+        }
+      }
+      variable = right_substring;
+    }
+    result += variables
   }
   else{
-    *output = variable;
+    result += variable;
   }
-  yylval.cpp_string = output;
-  output.clear();
+  yylval.cpp_string = result;
   return WORD;
 }
 
