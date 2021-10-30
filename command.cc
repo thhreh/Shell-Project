@@ -293,7 +293,7 @@ void Command::execute() {
         execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
         exit(1);
       }
-      last_arg = strdup(_simpleCommands[i]->_arguments[argsize-1]->c_str());
+      arg_last = strdup(_simpleCommands[i]->_arguments[argsize-1]->c_str());
     }
     //redirect stdout
     dup2(defaultin,0);
@@ -303,7 +303,7 @@ void Command::execute() {
     close(defaultout);
     close(defaulterr);
     //check for &
-    int status = 0
+    int status = 0;
     if (!_background) {
       waitpid(ret, status, 0);
       return_code = WEXITSTATUS(status);
