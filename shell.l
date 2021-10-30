@@ -12,6 +12,11 @@
 #include <cstring>
 #include "y.tab.hh"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "unistd.h"
+#include "shell.hh"
+
 
 
 static  void yyunput (int c,char *buf_ptr  );
@@ -20,7 +25,7 @@ void myunputc(int c) {
   unput(c);
 }
 
-std::string expand_variables(std::string input){
+std::string& expand_variables(std::string& input){
   if(str.find("${") <= str.size()){
     std::string left_substring = input.substr(0,input.find("${"));
     std::string right_substring = input.substr(input.find("}")+strlen("}"));

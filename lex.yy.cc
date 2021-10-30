@@ -705,7 +705,7 @@ void myunputc(int c) {
   unput(c);
 }
 
-std::string& expand_variables(std::string& input){
+std::string expand_variables(std::string input){
   if(str.find("${") <= str.size()){
     std::string left_substring = input.substr(0,input.find("${"));
     std::string right_substring = input.substr(input.find("}")+strlen("}"));
