@@ -33,8 +33,7 @@ int main() {
   sig.sa_handler = signalHandle;
   sigemptyset(&sig.sa_mask);
   sig.sa_flags = SA_RESTART;
-  std::string pid_current = std::to_string(getpid());
-  setenv("$", pid_current.c_str(), 1);
+  
 
   if(sigaction(SIGINT, &sig, NULL)){
     perror("sigaction");

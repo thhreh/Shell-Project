@@ -22,6 +22,10 @@
 #include "command.hh"
 #include "shell.hh"
 
+int return_code = 0;
+int pid_last = 0;
+std::string arg_last = "";
+
 
 Command::Command() {
     // Initialize a new vector of Simple Commands
@@ -289,6 +293,7 @@ void Command::execute() {
         execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
         exit(1);
       }
+      last_arg = strdup(_simpleCommands[i]->_arguments[argsize-1]->c_str());
     }
     //redirect stdout
     dup2(defaultin,0);
@@ -298,11 +303,13 @@ void Command::execute() {
     close(defaultout);
     close(defaulterr);
     //check for &
+    int status = 0
     if (!_background) {
-      waitpid(ret, NULL, 0);
+      waitpid(ret, status, 0);
+      return_code = WEXITSTATUS(status);
     }
     else{
-      Shell::_PIDs.push_back(ret);
+      pid_last = ret;
     }
     // Clear to prepare for next command
     clear();

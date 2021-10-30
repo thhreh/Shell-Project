@@ -15,6 +15,11 @@
 
 static  void yyunput (int c,char *buf_ptr  );
 
+extern int return_code;
+extern int pid_last;
+extern std::string arg_last;
+
+
 void myunputc(int c) {
   unput(c);
 }
@@ -40,11 +45,6 @@ void myunputc(int c) {
   //if(variable.compare("$") == 0) {
     //output = std::to_string(getpid());
 //  }
-//  else if(variable.compare("SHELL") == 0){
- //   char real_path[2048];
-  //  output = realpath("/proc/self/exe",real_path);
-
-  //}
   //else{
     //char * temp = getenv(variable.c_str());
     //empty enviro list
@@ -204,7 +204,19 @@ $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
       result += left_substring;
       std::string right_substring = variable.substr(variable.find("}")+strlen("}"));
       std::string main = variable.substr(left_substring.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
-      if(main.compare("SHELL") == 0){
+      if(main.compare("$") == 0){
+        result += std::to_string(getpid());
+      }
+      else if(main.compare("?") == 0){
+        result += std::to_string(return_code);
+      }
+      else if(main.compare("!") == 0){
+        result += std::to_string(pid_last);
+      }
+      else if(main.compare("_") == 0){
+        result += arg_last;
+      }
+      else if(main.compare("SHELL") == 0){
         char real_path[2048];
         result += realpath("/proc/self/exe",real_path);
 

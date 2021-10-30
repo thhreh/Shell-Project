@@ -1210,10 +1210,7 @@ YY_RULE_SETUP
       result += left_substring;
       std::string right_substring = variable.substr(variable.find("}")+strlen("}"));
       std::string main = variable.substr(left_substring.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
-      if(main.compare("$") == 0){
-        result += std::to_string(getpid());
-      }
-      else if(main.compare("SHELL") == 0){
+      if(main.compare("SHELL") == 0){
         char real_path[2048];
         result += realpath("/proc/self/exe",real_path);
 
@@ -1239,7 +1236,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 236 "shell.l"
+#line 233 "shell.l"
 {
   //Quotes
   yylval.cpp_string = new std::string(yytext);
@@ -1251,7 +1248,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 245 "shell.l"
+#line 242 "shell.l"
 {
   //escape
   //temp_string
@@ -1269,7 +1266,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 260 "shell.l"
+#line 257 "shell.l"
 {
 
   //source call
@@ -1293,7 +1290,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 282 "shell.l"
+#line 279 "shell.l"
 {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -1301,7 +1298,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 287 "shell.l"
+#line 284 "shell.l"
 {
     return NOTOKEN;
 
@@ -1309,10 +1306,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 293 "shell.l"
+#line 290 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1316 "lex.yy.cc"
+#line 1313 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2329,4 +2326,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 293 "shell.l"
+#line 290 "shell.l"
