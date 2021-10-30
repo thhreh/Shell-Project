@@ -107,7 +107,7 @@ std::string& getexceptionenv(std::string& variable){
 }
 
 
-[^ \n\t]*([\$][\{][^ \n\t]*?[\}])[^ \n\t]*{
+[^ \n\t]*([\$][\{][^ \n\t]*?[\}])[^ \n\t]* {
   //expension
   std::string variable = yytext;
   std::string *output = new std::string();

@@ -1742,29 +1742,29 @@ yyerror(const char * s)
   fprintf(stderr,"%s", s);
 }
 
-void wildcardToRegularExpression(char * prefix, char * suffix) {
-  if (suffix[0] == 0) {
-    _sortArgument.push_back(strdup(prefix));
-    return;
-  }
-  char Prefix[1024];
-  if (prefix[0] == 0) {
-    if (suffix[0] == '/') {
-      suffix += 1;
-      sprintf(Prefix, "%s/", prefix);
-    }
-    else{
-      strcpy(Prefix, prefix);
-    }
-  }
-  else{
-    sprintf(Prefix, "%s/", prefix);
-  }
+//void wildcardToRegularExpression(char * prefix, char * suffix) {
+//  if (suffix[0] == 0) {
+//    _sortArgument.push_back(strdup(prefix));
+//    return;
+//  }
+//  char Prefix[1024];
+//  if (prefix[0] == 0) {
+ //   if (suffix[0] == '/') {
+   //   suffix += 1;
+//      sprintf(Prefix, "%s/", prefix);
+//    }
+ //   else{
+  //    strcpy(Prefix, prefix);
+//    }
+//  }
+//  else{
+//    sprintf(Prefix, "%s/", prefix);
+//  }
 
-  char * s = strchr(suffix, '/');
-  char component[1024];
+//  char * s = strchr(suffix, '/');
+//  char component[1024];
 
-}
+//}
 
 #if 0
 main()
