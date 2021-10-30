@@ -204,10 +204,7 @@ $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
       result += left_substring;
       std::string right_substring = variable.substr(variable.find("}")+strlen("}"));
       std::string main = variable.substr(left_substring.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
-      if(main.compare("$") == 0){
-        result += std::to_string(getpid());
-      }
-      else if(main.compare("SHELL") == 0){
+      if(main.compare("SHELL") == 0){
         char real_path[2048];
         result += realpath("/proc/self/exe",real_path);
 
