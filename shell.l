@@ -59,6 +59,8 @@ std::string& getexceptionenv(std::string& variable){
   return variable;
 }
 
+}
+
 
 %}
 
