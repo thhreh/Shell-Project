@@ -305,7 +305,7 @@ void Command::execute() {
     //check for &
     int status = 0;
     if (!_background) {
-      waitpid(ret, status, 0);
+      waitpid(ret, &status, 0);
       return_code = WEXITSTATUS(status);
     }
     else{
