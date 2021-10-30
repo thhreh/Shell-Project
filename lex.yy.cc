@@ -532,53 +532,51 @@ void myunputc(int c) {
   unput(c);
 }
 
-std::string& expand_variables(std::string& input){
-  if(str.find("${") <= str.size()){
-    std::string left_substring = input.substr(0,input.find("${"));
-    std::string right_substring = input.substr(input.find("}")+strlen("}"));
-    std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
-    main = getexceptionenv(main);
-    input = left + main + expand_variables(right_substring);
-    left_substring.clear();
-    right_substring.clear();
-    main.clear();
-  }
-  return input;
+//std::string& expand_variables(std::string& input){
+//  if(str.find("${") <= str.size()){
+//    std::string left_substring = input.substr(0,input.find("${"));
+//    std::string right_substring = input.substr(input.find("}")+strlen("}"));
+ //   std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
+ //   main = getexceptionenv(main);
+ //   input = left + main + expand_variables(right_substring);
+ //   left_substring.clear();
+ //   right_substring.clear();
+ //   main.clear();
+//  }
+//  return input;
 
-}
+//}
 
-std::string& getexceptionenv(std::string& variable){
-  std::string output;
+//std::string& getexceptionenv(std::string& variable){
+ // std::string output;
   //${$The PID of the shell process
-  if(variable.compare("$") == 0) {
-    output = std::to_string(getpid());
-  }
-  else if(variable.compare("SHELL") == 0){
-    char real_path[2048];
-    output = realpath("/proc/self/exe",real_path);
+  //if(variable.compare("$") == 0) {
+    //output = std::to_string(getpid());
+//  }
+//  else if(variable.compare("SHELL") == 0){
+ //   char real_path[2048];
+  //  output = realpath("/proc/self/exe",real_path);
 
-  }
-  else{
-    char * temp = getenv(variable.c_str());
+  //}
+  //else{
+    //char * temp = getenv(variable.c_str());
     //empty enviro list
-    if(!temp) {
-      output = variable.c_str();
-    }
-    else {
-      output = temp;
-    }
-  }
-  variable.clear();
-  variable = output;
-  output.clear();
-  return variable;
-}
-
-}
+    //if(!temp) {
+      //output = variable.c_str();
+    //}
+    //else {
+      //output = temp;
+    //}
+  //}
+  //variable.clear();
+  //variable = output;
+  //output.clear();
+  //return variable;
+//}
 
 
-#line 581 "lex.yy.cc"
-#line 582 "lex.yy.cc"
+#line 579 "lex.yy.cc"
+#line 580 "lex.yy.cc"
 
 #define INITIAL 0
 
@@ -795,10 +793,10 @@ YY_DECL
 		}
 
 	{
-#line 69 "shell.l"
+#line 67 "shell.l"
 
 
-#line 802 "lex.yy.cc"
+#line 800 "lex.yy.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -868,83 +866,83 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 71 "shell.l"
+#line 69 "shell.l"
 {
   return NEWLINE;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 75 "shell.l"
+#line 73 "shell.l"
 {
   /* Discard spaces and tabs */
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 79 "shell.l"
+#line 77 "shell.l"
 {
   return TWOGREAT;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 83 "shell.l"
+#line 81 "shell.l"
 {
   return PIPE;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 87 "shell.l"
+#line 85 "shell.l"
 {
   return GREAT;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 91 "shell.l"
+#line 89 "shell.l"
 {
   return GREATGREAT;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 95 "shell.l"
+#line 93 "shell.l"
 {
   return LESS;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 99 "shell.l"
+#line 97 "shell.l"
 {
   return AMPERSAND;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 103 "shell.l"
+#line 101 "shell.l"
 {
   return GREATAMPERSAND;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 107 "shell.l"
+#line 105 "shell.l"
 {
   return GREATGREATAMPERSAND;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 112 "shell.l"
+#line 110 "shell.l"
 {
   //expension
   std::string variable = yytext;
   std::string *output = new std::string();
   if (variable.find("${") <= variable.size()){
-    *output = expand_variables(variable);
+   // *output = expand_variables(variable);
   }
   else{
   //if we did not find ${ return itself
@@ -1073,7 +1071,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 244 "shell.l"
+#line 242 "shell.l"
 {
 
   //source call
@@ -1097,7 +1095,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 266 "shell.l"
+#line 264 "shell.l"
 {
   yylval.cpp_string = new std::string(yytext);
   return WORD;
@@ -1105,7 +1103,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 271 "shell.l"
+#line 269 "shell.l"
 {
     return NOTOKEN;
 
@@ -1113,10 +1111,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 277 "shell.l"
+#line 275 "shell.l"
 ECHO;
 	YY_BREAK
-#line 1120 "lex.yy.cc"
+#line 1118 "lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2133,4 +2131,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 277 "shell.l"
+#line 275 "shell.l"

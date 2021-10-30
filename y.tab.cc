@@ -183,7 +183,6 @@ int yyparse (void);
 void yyerror(const char * s);
 void wildcardToRegularExpression(char * prefix, char * suffix);
 void expandWildcardsIfNecessary(std::string * arg);
-
 int yylex();
 
 static bool wildCard;

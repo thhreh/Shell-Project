@@ -106,24 +106,23 @@ void myunputc(int c) {
   return GREATGREATAMPERSAND;
 }
 
-
-[^ \n\t]*([\$][\{][^ \n\t]*?[\}])[^ \n\t]* {
+$\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
   //expension
-  std::string variable = yytext;
-  std::string *output = new std::string();
-  if (variable.find("${") <= variable.size()){
+  //std::string variable = yytext;
+  //std::string *output = new std::string();
+  //if (variable.find("${") <= variable.size()){
    // *output = expand_variables(variable);
-  }
-  else{
+  //}
+  //else{
   //if we did not find ${ return itself
-    *output = variable;
-  }
+    //*output = variable;
+  //}
 
-  yylval.cpp_string = output;
-  output.clear();
-  return WORD;
+  //yylval.cpp_string = output;
+  //output.clear();
+  //return WORD;
+
 }
-
 
 ~[^ \n\t]* {
   //tidle
