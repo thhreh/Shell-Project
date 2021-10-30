@@ -278,9 +278,6 @@ void Command::execute() {
           exit(0);
         }
         
-      
-        
-        
 
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
