@@ -60,8 +60,6 @@ std::string& getexceptionenv(std::string& variable){
 }
 
 }
-
-
 %}
 
 %option noyywrap
