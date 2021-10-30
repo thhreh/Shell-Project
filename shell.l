@@ -17,20 +17,20 @@ void myunputc(int c) {
   unput(c);
 }
 
-//std::string& expand_variables(std::string& input){
-//  if(str.find("${") <= str.size()){
-//    std::string left_substring = input.substr(0,input.find("${"));
-//    std::string right_substring = input.substr(input.find("}")+strlen("}"));
- //   std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
- //   main = getexceptionenv(main);
- //   input = left + main + expand_variables(right_substring);
- //   left_substring.clear();
- //   right_substring.clear();
- //   main.clear();
-//  }
-//  return input;
+std::string& expand_variables(std::string& input){
+  if(str.find("${") <= str.size()){
+    std::string left_substring = input.substr(0,input.find("${"));
+    std::string right_substring = input.substr(input.find("}")+strlen("}"));
+    std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
+    main = getexceptionenv(main);
+    input = left + main + expand_variables(right_substring);
+    left_substring.clear();
+    right_substring.clear();
+    main.clear();
+  }
+  return input;
 
-//}
+}
 
 //std::string& getexceptionenv(std::string& variable){
  // std::string output;
