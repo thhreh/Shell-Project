@@ -199,16 +199,17 @@ $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
   std::string variable = yytext;
   std::string result = "";
   if (variable.find("${") <= variable.size()){
-    while(variable.find <= variable.size()){
-      result += variable.substr(0,input.find("${"));
+    while(variable.find("${") <= variable.size()){
+      std::string left_substring= variable.substr(0,variable.find("${"));
+      result += left_substring;
       std::string right_substring = variable.substr(variable.find("}")+strlen("}"));
-      std::string main = variable.substr(left.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
+      std::string main = variable.substr(left_substring.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
       if(main.compare("$") == 0){
-        result += std:to_string(getpid());
+        result += std::to_string(getpid());
       }
       else if(main.compare("SHELL") == 0){
         char real_path[2048];
-        result += realpath("/proc/self/exe",real_path)
+        result += realpath("/proc/self/exe",real_path);
 
       }
       else{
@@ -221,12 +222,12 @@ $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
       }
       variable = right_substring;
     }
-    result += variables
+    result += variable;
   }
   else{
     result += variable;
   }
-  yylval.cpp_string = result;
+  yylval.cpp_string = new std::string(result);
   return WORD;
 }
 
