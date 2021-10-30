@@ -8,6 +8,7 @@
 
 %{
 
+#include <string>
 #include <cstring>
 #include "y.tab.hh"
 #include <string.h>
