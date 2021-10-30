@@ -193,7 +193,9 @@ void myunputc(int c) {
 
 }
 
-
+$\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
+  return WORD;
+}
 
 
 
