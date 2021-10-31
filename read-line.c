@@ -131,6 +131,16 @@ char * read_line() {
         line_length++;
       }
     }
+    else if(ch == 1){
+      //go to begining
+      while(line_length != 0){
+        char c = 8;
+        write(1,&c,1);
+        right_buffer[right_length] = line_buffer[line_length-1];
+        right_length++;
+        line_length--;
+      }
+    }
     else if (ch == 31) {
       // ctrl-?
       read_line_print_usage();
