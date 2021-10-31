@@ -82,7 +82,15 @@ char * read_line() {
           line_buffer[line_length] = line_buffer[line_length-1];
         }
         line_buffer[cru_position] = ch;
-        for (int i=line_length; i>=cru_position; i--) {
+        for (int i = line_length; i >= 0; i--){
+          ch = 8;
+          write(1,&ch,1);
+          ch = ' ';
+          write(1,&ch,1);
+          ch = 8;
+          write(1,&ch,1);
+        }
+        for (int i=line_length; i>= 0 ; i--) {
             char c = line_buffer[i];
             write(1,&c,1);
         }
