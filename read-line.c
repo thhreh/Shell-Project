@@ -47,7 +47,7 @@ void read_line_print_usage()
     " right arrow     move cru to the right\n"
     " ctrl D        delete this character\n"
     "ctrl E         go to end of the line\n"
-    "ctrl A         go to start of the line\n"
+    "ctrl A         go to start of the line\n";
 
   write(1, usage, strlen(usage));
 }
