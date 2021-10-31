@@ -108,7 +108,7 @@ argument:
     wildCard = false;
     char *p = (char *)"";
     expandWildcard(p, (char *)$1->c_str());
-    std::sort(_sortArgument.begin(), _sortArgument.end(), cmpfunction);
+    std::sort(_sortArgument.begin(), _sortArgument.end(), string_equality);
     for (auto a: _sortArgument) {
       std::string * argToInsert = new std::string(a);
       Command::_currentSimpleCommand->insertArgument(argToInsert);
@@ -204,6 +204,7 @@ void expandWildcard(char * prefix, char * suffix) {
     return;
   }
   char Prefix[1024];
+  char newPrefix[1024];
   if (prefix[0] == 0) {
     if (suffix[0] == '/') {
       suffix += 1;
@@ -228,8 +229,6 @@ void expandWildcard(char * prefix, char * suffix) {
     strcpy(component, suffix);
     suffix = suffix + strlen(suffix);
   }
-
-  char newPrefix[MAXFILENAME];
   if (strchr(component,'?')==NULL & strchr(component,'*')==NULL) {
     if (Prefix[0] == 0){
       strcpy(newPrefix, component);
@@ -312,13 +311,14 @@ void expandWildcard(char * prefix, char * suffix) {
 
 }
 
-void expandWildcardsIfNecessary(std::string * arg);
+void expandWildcardsIfNecessary(std::string * arg){
+  char * arg_c = (char *)arg->c_str();
   if (strchr(arg_c,'?')==NULL & strchr(arg_c,'*')==NULL) {
     Command::_currentSimpleCommand->insertArgument(arg);
     return;
   }
-  char * arg_c = (char *)arg->c_str();
   char * a;
+  std::string path;
   DIR * dir;
   if (arg_c[0] == '/') {
     std::size_t found = arg->find('/');
