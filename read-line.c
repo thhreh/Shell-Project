@@ -221,6 +221,8 @@ char * read_line() {
       read(0, &ch1, 1);
       read(0, &ch2, 1);
       if (ch1==91 && (ch2==65 || ch2 == 66)) {
+
+      right_length = 0;
 	// Up arrow. Print next line in history.
 
 	// Erase old line
@@ -245,18 +247,13 @@ char * read_line() {
 
 
 	// Copy line from history
-	
+	strcpy(line_buffer, history[history_prev]);
 	line_length = strlen(line_buffer);
-  if(ch2 == 65){
-	  history_prev=(history_prev+1)%(history_full?history_length:history_index);
-    strcpy(line_buffer, history[history_prev]);
-  }
-  if(ch2 == 66){
-    history_prev=(history_prev-1)%history_full?history_length:history_index;
-    strcpy(line_buffer, history[history_prev]);
-  }
+  int temp = history_full?history_length:history_index;
+  int bool_temp = ch2 == 65? -1 : 1;
+  history_prev=(history_prev+bool_temp)%temp;
   if (history_prev == -1){
-    history_prev = (history_full?history_length:history_index) - 1;
+    history_prev = temp - 1;
   }
 
 
