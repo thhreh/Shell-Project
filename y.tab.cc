@@ -181,14 +181,18 @@ int yyparse (void);
 #include "shell.hh"
 
 void yyerror(const char * s);
-void wildcardToRegularExpression(char * prefix, char * suffix);
+void expandWildcard(char * prefix, char * suffix);
 void expandWildcardsIfNecessary(std::string * arg);
+bool string_equality (char * a, char * b);
+
 int yylex();
+static std::vector<char *> _sortArgument = std::vector<char *>();
+
 
 static bool wildCard;
 
 
-#line 192 "y.tab.cc"
+#line 196 "y.tab.cc"
 
 
 #ifdef short
@@ -550,9 +554,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    50,    50,    54,    55,    58,    62,    66,    67,    72,
-      73,    77,    78,    79,    83,    86,    90,    97,    98,   102,
-     109,   122,   131,   143,   153,   161,   170,   170
+       0,    54,    54,    58,    59,    62,    66,    70,    71,    76,
+      77,    81,    82,    83,    87,    90,    94,   101,   102,   106,
+     122,   135,   144,   156,   166,   174,   183,   183
 };
 #endif
 
@@ -1363,48 +1367,57 @@ yyreduce:
   switch (yyn)
     {
   case 6:
-#line 62 "shell.y"
+#line 66 "shell.y"
                                                          {
    // printf("   Yacc: Execute command\n");
     Shell::_currentCommand.execute();
   }
-#line 1372 "y.tab.cc"
+#line 1376 "y.tab.cc"
     break;
 
   case 8:
-#line 67 "shell.y"
+#line 71 "shell.y"
                   { yyerrok; }
-#line 1378 "y.tab.cc"
+#line 1382 "y.tab.cc"
     break;
 
   case 14:
-#line 83 "shell.y"
+#line 87 "shell.y"
             {
     Shell::_currentCommand._background = true;
   }
-#line 1386 "y.tab.cc"
+#line 1390 "y.tab.cc"
     break;
 
   case 16:
-#line 90 "shell.y"
+#line 94 "shell.y"
                              {
     Shell::_currentCommand.
     insertSimpleCommand( Command::_currentSimpleCommand );
   }
-#line 1395 "y.tab.cc"
+#line 1399 "y.tab.cc"
     break;
 
   case 19:
-#line 102 "shell.y"
+#line 106 "shell.y"
        {
     //printf("   Yacc: insert argument \"%s\"\n", $1->c_str());
-    Command::_currentSimpleCommand->insertArgument( (yyvsp[0].cpp_string) );\
+    wildCard = false;
+    char *p = (char *)"";
+    expandWildcard(p, (char *)(yyvsp[0].cpp_string)->c_str());
+    std::sort(_sortArgument.begin(), _sortArgument.end(), cmpfunction);
+    for (auto a: _sortArgument) {
+      std::string * argToInsert = new std::string(a);
+      Command::_currentSimpleCommand->insertArgument(argToInsert);
+    }
+    _sortArgument.clear();
+
   }
-#line 1404 "y.tab.cc"
+#line 1417 "y.tab.cc"
     break;
 
   case 20:
-#line 109 "shell.y"
+#line 122 "shell.y"
        {
     //printf("   Yacc: insert command \"%s\"\n", $1->c_str());
 
@@ -1415,11 +1428,11 @@ yyreduce:
     Command::_currentSimpleCommand = new SimpleCommand();
     Command::_currentSimpleCommand->insertArgument( (yyvsp[0].cpp_string) );
   }
-#line 1419 "y.tab.cc"
+#line 1432 "y.tab.cc"
     break;
 
   case 21:
-#line 122 "shell.y"
+#line 135 "shell.y"
              {
     
     //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
@@ -1429,11 +1442,11 @@ yyreduce:
     }
     Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
   }
-#line 1433 "y.tab.cc"
+#line 1446 "y.tab.cc"
     break;
 
   case 22:
-#line 131 "shell.y"
+#line 144 "shell.y"
                              {
       //use different string for err and out to aviod doubel free
       //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
@@ -1446,11 +1459,11 @@ yyreduce:
       Shell::_currentCommand._errFile = errFile;
       Shell::_currentCommand._append = true;
   }
-#line 1450 "y.tab.cc"
+#line 1463 "y.tab.cc"
     break;
 
   case 23:
-#line 143 "shell.y"
+#line 156 "shell.y"
                         {
       //printf("   Yacc: insert output \"%s\"\n", $2->c_str());
       std::string *errFile = new std::string((yyvsp[0].cpp_string)->c_str());
@@ -1461,11 +1474,11 @@ yyreduce:
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._errFile = errFile;
   }
-#line 1465 "y.tab.cc"
+#line 1478 "y.tab.cc"
     break;
 
   case 24:
-#line 153 "shell.y"
+#line 166 "shell.y"
               {
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
       if (Shell::_currentCommand._outFile != NULL ){
@@ -1474,11 +1487,11 @@ yyreduce:
       }
       Shell::_currentCommand._inFile = (yyvsp[0].cpp_string);
   }
-#line 1478 "y.tab.cc"
+#line 1491 "y.tab.cc"
     break;
 
   case 25:
-#line 161 "shell.y"
+#line 174 "shell.y"
                     {
       //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
       if (Shell::_currentCommand._outFile != NULL ){
@@ -1488,20 +1501,20 @@ yyreduce:
       Shell::_currentCommand._outFile = (yyvsp[0].cpp_string);
       Shell::_currentCommand._append = true;
   }
-#line 1492 "y.tab.cc"
+#line 1505 "y.tab.cc"
     break;
 
   case 27:
-#line 170 "shell.y"
+#line 183 "shell.y"
                   {
     //printf("   Yacc: insert input \"%s\"\n", $2->c_str());
     Shell::_currentCommand._errFile = (yyvsp[0].cpp_string);
   }
-#line 1501 "y.tab.cc"
+#line 1514 "y.tab.cc"
     break;
 
 
-#line 1505 "y.tab.cc"
+#line 1518 "y.tab.cc"
 
       default: break;
     }
@@ -1733,7 +1746,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 178 "shell.y"
+#line 191 "shell.y"
 
 
 void
@@ -1742,29 +1755,206 @@ yyerror(const char * s)
   fprintf(stderr,"%s", s);
 }
 
-//void wildcardToRegularExpression(char * prefix, char * suffix) {
-//  if (suffix[0] == 0) {
-//    _sortArgument.push_back(strdup(prefix));
-//    return;
-//  }
-//  char Prefix[1024];
-//  if (prefix[0] == 0) {
- //   if (suffix[0] == '/') {
-   //   suffix += 1;
-//      sprintf(Prefix, "%s/", prefix);
-//    }
- //   else{
-  //    strcpy(Prefix, prefix);
-//    }
-//  }
-//  else{
-//    sprintf(Prefix, "%s/", prefix);
-//  }
+bool string_equality (char * a, char * b) { return strcmp(a,b)<0; }
 
-//  char * s = strchr(suffix, '/');
-//  char component[1024];
+void expandWildcard(char * prefix, char * suffix) {
+  if (suffix[0] == 0) {
+    _sortArgument.push_back(strdup(prefix));
+    return;
+  }
+  char Prefix[1024];
+  if (prefix[0] == 0) {
+    if (suffix[0] == '/') {
+      suffix += 1;
+      sprintf(Prefix, "%s/", prefix);
+    }
+    else{
+      strcpy(Prefix, prefix);
+    }
+  }
+  else{
+    sprintf(Prefix, "%s/", prefix);
+  }
 
-//}
+  char * s = strchr(suffix, '/');
+  char component[1024];
+  if (s != NULL) {
+    strncpy(component, suffix, s-suffix);
+    component[s-suffix] = 0;
+    suffix = s + 1;
+  }
+  else {
+    strcpy(component, suffix);
+    suffix = suffix + strlen(suffix);
+  }
+
+  char newPrefix[MAXFILENAME];
+  if (strchr(component,'?')==NULL & strchr(component,'*')==NULL) {
+    if (Prefix[0] == 0){
+      strcpy(newPrefix, component);
+    }
+    else{
+      sprintf(newPrefix, "%s/%s", prefix, component);
+    }
+    expandWildcard(newPrefix, suffix);
+    return;
+  }
+
+  char * reg = (char*)malloc(2*strlen(component)+10);
+  char * r = reg;
+  *r = '^'; r++;
+  int i = 0;
+  while (component[i]) {
+    if (component[i] == '*') {
+      *r='.'; r++; *r='*'; r++;
+    }
+    else if (component[i] == '?') {
+      *r='.'; r++;
+    }
+    else if (component[i] == '.') {
+      *r='\\'; r++; *r='.'; r++;
+    }
+    else {
+      *r=component[i]; r++;
+    }
+    i++;
+  }
+  *r='$'; r++; *r=0;
+  regex_t re;
+  int expbuf = regcomp(&re, reg, REG_EXTENDED|REG_NOSUB);
+
+  char * dir;
+  if (Prefix[0] == 0){
+    dir = (char*)".";
+  }
+  else{ 
+    dir = Prefix;
+  }
+  DIR * d = opendir(dir);
+  if (d == NULL) {
+    return;
+  }
+
+  struct dirent * ent;
+  bool find = false;
+  while ((ent = readdir(d)) != NULL) {
+    if(regexec(&re, ent->d_name, 1, NULL, 0) == 0) {
+      find = true;
+      if (Prefix[0] == 0){
+        strcpy(newPrefix, ent->d_name);
+      }
+      else {
+        sprintf(newPrefix, "%s/%s", prefix, ent->d_name);
+      }
+      if (reg[1] == '.') {
+        if (ent->d_name[0] != '.') expandWildcard(newPrefix, suffix);
+      } else{
+        expandWildcard(newPrefix, suffix);
+      }
+    }
+  }
+  if (!find) {
+    if (Prefix[0] == 0){
+      strcpy(newPrefix, component);
+    }
+    else {
+      sprintf(newPrefix, "%s/%s", prefix, component);
+    }
+    expandWildcard(newPrefix, suffix);
+  }
+  closedir(d);
+  regfree(&re);
+  free(reg);
+
+
+
+
+}
+
+void expandWildcardsIfNecessary(std::string * arg);
+  if (strchr(arg_c,'?')==NULL & strchr(arg_c,'*')==NULL) {
+    Command::_currentSimpleCommand->insertArgument(arg);
+    return;
+  }
+  char * arg_c = (char *)arg->c_str();
+  char * a;
+  DIR * dir;
+  if (arg_c[0] == '/') {
+    std::size_t found = arg->find('/');
+    while (arg->find('/',found+1) != -1) {
+      found = arg->find('/', found+1);
+    }
+    path = arg->substr(0, found+1);
+    a = (char *)arg->substr(found+1, -1).c_str();
+    dir = opendir(path.c_str());
+
+
+  }
+  else{
+    dir = opendir(".");
+    a = arg_c;
+  }
+  if (dir == NULL) {
+    perror("opendir");
+    return;
+  }
+  char * reg = (char*)malloc(2*strlen(arg_c)+10);
+  char * r = reg;
+  *r = '^'; r++;
+  while (*a) {
+    if (*a == '*') {
+      *r='.'; r++; *r='*'; r++;
+    }
+    else if (*a == '?') {
+      *r='.'; r++;
+    }
+    else if (*a == '.') {
+      *r='\\'; r++; *r='.'; r++;
+    }
+    else {
+      *r=*a; r++;
+    }
+    a++;
+  }
+  *r='$'; r++; *r=0;
+  regex_t re;
+  int expbuf = regcomp(&re, reg, REG_EXTENDED|REG_NOSUB);
+  if (expbuf != 0) {
+    perror("regcomp");
+    return;
+  }
+
+  std::vector<char *> sortArgument = std::vector<char *>();
+  struct dirent * ent;
+  while ( (ent=readdir(dir)) != NULL) {
+    if (regexec(&re, ent->d_name, 1, NULL, 0) == 0) {
+      if (reg[1] == '.') {
+        if (ent->d_name[0] != '.') {
+          std::string name(ent->d_name);
+          name = path + name;
+          sortArgument.push_back(strdup((char *)name.c_str()));
+        }
+      }
+      else{
+        std::string name(ent->d_name);
+        name = path + name;
+        sortArgument.push_back(strdup((char *)name.c_str()));
+      }
+    }
+  }
+  closedir(dir);
+  regfree(&re);
+
+  std::sort(sortArgument.begin(), sortArgument.end(), string_equality);
+
+  for (auto a: sortArgument) {
+    std::string * argToInsert = new std::string(a);
+    Command::_currentSimpleCommand->insertArgument(argToInsert);
+  }
+
+  sortArgument.clear();
+}
+
 
 #if 0
 main()

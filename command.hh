@@ -14,6 +14,8 @@
 #include <sys/stat.h>
 #include <regex.h>
 #include <pwd.h>
+#include <algorithm>
+#include <dirent.h>
 
 
 // Command Data Structure
