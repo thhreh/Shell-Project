@@ -290,12 +290,12 @@ void Command::execute() {
 
         }
         x[argsize] = NULL;
-        execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
         close(defaultin);
         close(defaultout);
         close(defaulterr);
         close(fdin);
         close(fdout);
+        execvp(_simpleCommands[i]->_arguments[0]->c_str(), x);
         exit(1);
       }
       arg_last = strdup(_simpleCommands[i]->_arguments[argsize-1]->c_str());
