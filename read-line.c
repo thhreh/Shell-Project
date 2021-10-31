@@ -51,6 +51,7 @@ char * read_line() {
   tty_raw_mode();
 
   line_length = 0;
+  cru_position = 0;
 
   // Read one line until enter is typed
   while (1) {
@@ -71,7 +72,11 @@ char * read_line() {
 
       // add char to buffer.
       line_buffer[line_length]=ch;
-      line_length++;
+      if(cru_position == line_length){
+        line_length++;
+      }
+      cru_position++;
+
     }
     else if (ch==10) {
       // <Enter> was typed. Return line
@@ -104,6 +109,7 @@ char * read_line() {
 
       // Remove one character from buffer
       line_length--;
+      cru_position--;
     }
     else if (ch==27) {
       // Escape sequence. Read two chars more
@@ -145,6 +151,19 @@ char * read_line() {
 
 	// echo line
 	write(1, line_buffer, line_length);
+      }
+      else if(ch1==91 && ch2==68){
+        //left arrow
+        if (cru_position == 0) continue;
+        //empty do nothing
+          ch = 27;
+          write(1,&ch,1);
+          ch = 91;
+          write(1,&ch,1);
+          ch = 68;
+          write(1,&ch,1);
+          cru_position--;
+
       }
       
     }
