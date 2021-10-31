@@ -85,10 +85,6 @@ char * read_line() {
         for (int i = line_length; i >= 0; i--){
           ch = 8;
           write(1,&ch,1);
-          ch = ' ';
-          write(1,&ch,1);
-          ch = 8;
-          write(1,&ch,1);
         }
         for (int i=line_length; i>= 0 ; i--) {
             char c = line_buffer[i];
