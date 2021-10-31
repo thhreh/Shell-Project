@@ -90,8 +90,8 @@ char * read_line() {
           ch = 8;
           write(1,&ch,1);
         }
-        for (int i=line_length; i>= 0 ; i--) {
-            char c = 'a';
+        for (int i= 0; i>= line_length ; i++) {
+            char c = line_buffer[i];
             write(1,&c,1);
         }
       }
