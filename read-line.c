@@ -17,6 +17,7 @@ extern void tty_raw_mode(void);
 // Buffer where line is stored
 int line_length;
 char line_buffer[MAX_BUFFER_LINE];
+int cru_position;
 
 // Simple history array
 // This history does not change. 
