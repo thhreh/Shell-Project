@@ -10,19 +10,61 @@
 
 #include <cstring>
 #include "y.tab.hh"
+#include "shell.hh"
+//extern “C” char * read_line();
+//int mygetc(FILE * f) {
+//  static char *p;
+  //char ch;
+  //if (!isatty(0)) {
+   // return getc(f);
+  //}
 
+  //if (p==NULL || *p == 0) {
+   // char * s = read_line();
+   // p = s;
 
+  //}
+  //ch = *p;
+  //p++;
+  //return ch;
+//}
+
+#undef getc
+#define getc(f) mygetc(f)
 
 static  void yyunput (int c,char *buf_ptr  );
 
 extern int return_code;
 extern int pid_last;
 extern std::string arg_last;
-
+extern "C" char * read_line();
 
 void myunputc(int c) {
   unput(c);
 }
+
+int mygetc(FILE * f) {
+  static char *p;
+  char ch;
+
+  if (!isatty(0)) {
+    return getc(f);
+
+  }
+  if (p==NULL || *p == 0) {
+  char * s = read_line();
+  p = s;
+
+  }
+  ch = *p;
+
+  p++;
+  return ch;
+
+
+}
+
+
 
 //std::string& expand_variables(std::string& input){
  // if(str.find("${") <= str.size()){

@@ -1853,7 +1853,7 @@ void expandWildcard(char * prefix, char * suffix) {
       }
     }
   }
-  if (find) {
+  if (!find) {
     if (Prefix[0] == 0){
       strcpy(newPrefix, component);
     }
