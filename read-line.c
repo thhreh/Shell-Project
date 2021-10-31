@@ -34,7 +34,7 @@ int history_full;
 //  "make",
 //  "ls -al | grep xxx | grep yyy"
 //};
-int history_length = sizeof(history)/sizeof(char *);
+int history_length = sizeof(history);
 
 void read_line_print_usage()
 {
@@ -117,6 +117,10 @@ char * read_line() {
         strcpy(history[history_index], line_buffer);
         history_prev = history_index;
         history_index++;
+        if (history_index>=history_length) {
+          history_index = 0;
+          history_full = 1;
+        }
       }
 
       right_length=0;
@@ -244,10 +248,13 @@ char * read_line() {
 	strcpy(line_buffer, history[history_prev]);
 	line_length = strlen(line_buffer);
   if(ch2 == 65){
-	  history_prev=(history_prev+1)%history_length;
+	  history_prev=(history_prev+1)%(history_full?history_length:history_index);
   }
   if(ch2 == 66){
-    history_prev=(history_prev-1)%history_length;
+    history_prev=(history_prev-1)%history_full?history_length:history_index;
+  }
+  if (history_index_rev == -1){
+    history_prev = (history_full?history_length:history_index) - 1;
   }
 
 
