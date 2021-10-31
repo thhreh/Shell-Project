@@ -17,7 +17,8 @@ extern void tty_raw_mode(void);
 // Buffer where line is stored
 int line_length;
 char line_buffer[MAX_BUFFER_LINE];
-int cru_position;
+char right_buffer[MAX_BUFFER_LINE];
+int right_length;
 
 // Simple history array
 // This history does not change. 
@@ -52,7 +53,7 @@ char * read_line() {
   tty_raw_mode();
 
   line_length = 0;
-  cru_position = line_length;
+  right_length = line_length;
 
   // Read one line until enter is typed
   while (1) {
@@ -69,37 +70,36 @@ char * read_line() {
       write(1,&ch,1);
 
       // If max number of character reached return.
-      if (line_length==MAX_BUFFER_LINE-2) break; 
+      if (line_length + right_length==MAX_BUFFER_LINE-2) break; 
 
       // add char to buffer.
-      if(cru_position == line_length){
+      if(right_length == 0){
         line_buffer[line_length] = ch;
         line_length++;
-        cru_position++;
       }else{
+        line_buffer[line_length] = ch;
         line_length++;
-        for(int i = line_length; i > cru_position;i--){
-          line_buffer[line_length] = line_buffer[line_length-1];
+        for (int i=right_length-1; i>=0; i--) {
+          char c = right_buffer[i];
+          write(1,&c,1);
         }
-        line_buffer[cru_position] = ch;
-        for (int i = line_length; i > 0; i--){
-          ch = 8;
-          write(1,&ch,1);
-          ch = ' ';
-          write(1,&ch,1);
-          ch = 8;
-          write(1,&ch,1);
+        for (int i=0; i<right_length; i++) {
+          char c = 8;
+          write(1,&c,1);
         }
-        for (int i= 0; i>= line_length ; i++) {
-            char c = line_buffer[i];
-            write(1,&c,1);
-        }
-      }
+
 
     }
     else if (ch==10) {
       // <Enter> was typed. Return line
-      
+      if (right_length != 0) {
+        for (int i=right_length-1; i>=0; i--) {
+          char c = right_buffer[i];
+          line_buffer[line_length]=c;
+          line_length++;
+        }
+      }
+      right_side_length=0;
       // Print newline
       write(1,&ch,1);
 
@@ -113,22 +113,43 @@ char * read_line() {
     }
     else if (ch == 8 || ch == 127) {
       // <backspace> was typed. Remove previous character read.
-
+      if(line_length == 0) continue;
+      
+      if(right_length == 0){
       // Go back one character
-      ch = 8;
-      write(1,&ch,1);
+        ch = 8;
+        write(1,&ch,1);
 
       // Write a space to erase the last character read
-      ch = ' ';
-      write(1,&ch,1);
+        ch = ' ';
+        write(1,&ch,1);
 
       // Go back one character
-      ch = 8;
-      write(1,&ch,1);
+        ch = 8;
+        write(1,&ch,1);
 
       // Remove one character from buffer
-      line_length--;
-      cru_position--;
+        line_length--;
+      }
+      else{
+        ch = 8;
+        write(1,&ch,1);
+
+        for(int i=right_length-1; i>=0; i--) {
+          char c = right_buffer[i];
+          write(1,&c,1);
+        }
+        // Write a space to erase the last character read
+        ch = ' ';
+        write(1,&ch,1);
+        for (int i=0; i<right_length+1; i++) {
+          char c = 8;
+          write(1,&c,1);
+        }
+        // Remove one character from buffer
+        line_length--;
+      }
+
     }
     else if (ch==27) {
       // Escape sequence. Read two chars more
@@ -173,15 +194,13 @@ char * read_line() {
       }
       else if(ch1==91 && ch2==68){
         //left arrow
-        if (cru_position == 0) continue;
-        //empty do nothing
-          ch = 27;
-          write(1,&ch,1);
-          ch = 91;
-          write(1,&ch,1);
-          ch = 68;
-          write(1,&ch,1);
-          cru_position--;
+        if (line_length == 0) continue;
+        ch = 8;
+        write(1,&ch,1);
+        //insert
+        right_buffer[right_length] = line_buffer[line_length-1];
+        right_length++;
+        line_length--;
 
       }
       
