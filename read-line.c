@@ -87,6 +87,7 @@ char * read_line() {
           char c = 8;
           write(1,&c,1);
         }
+      }
 
 
     }
