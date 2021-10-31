@@ -245,13 +245,15 @@ char * read_line() {
 
 
 	// Copy line from history
-	strcpy(line_buffer, history[history_prev]);
+	
 	line_length = strlen(line_buffer);
   if(ch2 == 65){
 	  history_prev=(history_prev+1)%(history_full?history_length:history_index);
+    strcpy(line_buffer, history[history_prev]);
   }
   if(ch2 == 66){
     history_prev=(history_prev-1)%history_full?history_length:history_index;
+    strcpy(line_buffer, history[history_prev]);
   }
   if (history_prev == -1){
     history_prev = (history_full?history_length:history_index) - 1;
