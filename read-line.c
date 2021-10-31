@@ -253,7 +253,7 @@ char * read_line() {
   if(ch2 == 66){
     history_prev=(history_prev-1)%history_full?history_length:history_index;
   }
-  if (history_index_rev == -1){
+  if (history_prev == -1){
     history_prev = (history_full?history_length:history_index) - 1;
   }
 
