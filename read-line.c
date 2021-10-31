@@ -26,6 +26,7 @@ int right_length;
 int history_index = 0;
 int history_prev = 0;
 char * history [16];
+int history_full;
 //  "ls -al | grep x", 
 //  "ps -e",
 //  "cat read-line-example.c",
@@ -40,10 +41,10 @@ void read_line_print_usage()
   char * usage = "\n"
     " ctrl-?       Print usage\n"
     " Backspace    Deletes last character\n"
-    " up arrow     See last command in the history\n";
-    " down arrow     See next command in the history\n";
-    " left arrow     move cru to the left\n";
-    " right arrow     move cru to the right\n";
+    " up arrow     See last command in the history\n"
+    " down arrow     See next command in the history\n"
+    " left arrow     move cru to the left\n"
+    " right arrow     move cru to the right\n"
     " ctrl D        delete this character\n"
     "ctrl E         go to end of the line\n"
     "ctrl A         go to start of the line\n"
@@ -243,10 +244,10 @@ char * read_line() {
 	strcpy(line_buffer, history[history_prev]);
 	line_length = strlen(line_buffer);
   if(ch2 == 65){
-	  history_index_prev=(history_index_prev+1)%history_length;
+	  history_prev=(history_prev+1)%history_length;
   }
   if(ch2 == 66){
-    history_index_prev=(history_index_prev-1)%history_length;
+    history_prev=(history_prev-1)%history_length;
   }
 
 
