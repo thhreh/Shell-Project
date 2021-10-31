@@ -79,7 +79,7 @@ char * read_line() {
       }else{
         line_length++;
         for(int i = line_length; i > cru_position;i--){
-          line_buffer[line_length] = line_buffer[line_length-1]
+          line_buffer[line_length] = line_buffer[line_length-1];
         }
         line_buffer[cru_position] = ch;
         for (int i=line_length; i>=cru_position; i--) {
