@@ -44,7 +44,8 @@ int yylex();
 static std::vector<char *> _sortArgument = std::vector<char *>();
 
 
-static bool wildCard;
+bool wildCard;
+bool find=false;
 
 %}
 
@@ -114,6 +115,7 @@ argument:
       Command::_currentSimpleCommand->insertArgument(argToInsert);
     }
     _sortArgument.clear();
+
 
   }
   ;
@@ -276,7 +278,6 @@ void expandWildcard(char * prefix, char * suffix) {
   }
 
   struct dirent * ent;
-  bool find = false;
   while ((ent = readdir(d)) != NULL) {
     if(regexec(&re, ent->d_name, 1, NULL, 0) == 0) {
       find = true;
