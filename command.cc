@@ -300,7 +300,7 @@ void Command::execute() {
     dup2(defaulterr,2);
     close(defaultin);
     close(defaultout);
-    close(defaulterr);
+    //close(defaulterr);
     //check for &
     int status = 0;
     if (!_background) {
