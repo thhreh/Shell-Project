@@ -108,7 +108,7 @@ char * read_line() {
     }
     else if (ch == 4){
       //ctrld
-      if (line_length == 0) continue;
+      if (right_length == 0) continue;
       for(int i=right_length-2; i>=0; i--) {
         char c = right_buffer[i];
         write(1,&c,1);
