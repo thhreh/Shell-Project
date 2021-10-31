@@ -234,6 +234,7 @@ int mygetc(FILE * f) {
   for (j = i - 1; j >= 0; j--) {
     myunputc(buffer[j]);
   }
+  close(fdpipeout[0]);
 
 }
 
