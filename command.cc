@@ -261,6 +261,7 @@ void Command::execute() {
 
       dup2(fdout, 1);
       close(fdout);
+      close(fdin);
 
 
       //fork child program
@@ -281,7 +282,6 @@ void Command::execute() {
           }
           exit(0);
         }
-        
 
         char ** x = new char*[argsize+1];
         for (size_t j = 0; j<argsize;j++){
