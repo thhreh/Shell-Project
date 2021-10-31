@@ -24,14 +24,15 @@ int right_length;
 // This history does not change. 
 // Yours have to be updated.
 int history_index = 0;
-char * history [] = {
-  "ls -al | grep x", 
-  "ps -e",
-  "cat read-line-example.c",
-  "vi hello.c",
-  "make",
-  "ls -al | grep xxx | grep yyy"
-};
+int history_prev = 0;
+char * history [16];
+//  "ls -al | grep x", 
+//  "ps -e",
+//  "cat read-line-example.c",
+//  "vi hello.c",
+//  "make",
+//  "ls -al | grep xxx | grep yyy"
+//};
 int history_length = sizeof(history)/sizeof(char *);
 
 void read_line_print_usage()
@@ -40,6 +41,12 @@ void read_line_print_usage()
     " ctrl-?       Print usage\n"
     " Backspace    Deletes last character\n"
     " up arrow     See last command in the history\n";
+    " down arrow     See next command in the history\n";
+    " left arrow     move cru to the left\n";
+    " right arrow     move cru to the right\n";
+    " ctrl D        delete this character\n"
+    "ctrl E         go to end of the line\n"
+    "ctrl A         go to start of the line\n"
 
   write(1, usage, strlen(usage));
 }
@@ -100,6 +107,17 @@ char * read_line() {
           line_length++;
         }
       }
+
+      if (line_length != 0) {
+        if (history[history_index]==NULL){
+          history[history_index] = (char *)malloc(MAX_BUFFER_LINE);
+
+        }
+        strcpy(history[history_index], line_buffer);
+        history_prev = history_index;
+        history_index++;
+      }
+
       right_length=0;
       // Print newline
       write(1,&ch,1);
@@ -197,7 +215,7 @@ char * read_line() {
       char ch2;
       read(0, &ch1, 1);
       read(0, &ch2, 1);
-      if (ch1==91 && ch2==65) {
+      if (ch1==91 && (ch2==65 || ch2 == 66)) {
 	// Up arrow. Print next line in history.
 
 	// Erase old line
@@ -220,10 +238,17 @@ char * read_line() {
 	  write(1,&ch,1);
 	}	
 
+
 	// Copy line from history
-	strcpy(line_buffer, history[history_index]);
+	strcpy(line_buffer, history[history_prev]);
 	line_length = strlen(line_buffer);
-	history_index=(history_index+1)%history_length;
+  if(ch2 == 65){
+	  history_index_prev=(history_index_prev+1)%history_length;
+  }
+  if(ch2 == 66){
+    history_index_prev=(history_index_prev-1)%history_length;
+  }
+
 
 	// echo line
 	write(1, line_buffer, line_length);
