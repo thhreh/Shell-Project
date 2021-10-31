@@ -124,10 +124,10 @@ char * read_line() {
     }
     else if(ch == 5){
       //end of the line ctrl E
-      while(right_size_length != 0){
+      while(right_length != 0){
         write(1,"\033[1C",5);
-        line_buffer[line_length]=right_side_buffer[right_side_length-1];
-        right_side_length--;
+        line_buffer[line_length]=right_buffer[right_length-1];
+        right_length--;
         line_length++;
       }
     }
