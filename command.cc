@@ -301,7 +301,6 @@ void Command::execute() {
     close(defaultin);
     close(defaultout);
     close(defaulterr);
-    close(fdin);
     //check for &
     int status = 0;
     if (!_background) {
