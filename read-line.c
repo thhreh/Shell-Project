@@ -99,7 +99,7 @@ char * read_line() {
           line_length++;
         }
       }
-      right_side_length=0;
+      right_length=0;
       // Print newline
       write(1,&ch,1);
 
