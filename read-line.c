@@ -106,6 +106,22 @@ char * read_line() {
 
       break;
     }
+    else if (ch = 4){
+      //ctrld
+      if (line_length == 0) continue;
+      for(int i=right_length-2; i>=0; i--) {
+        char c = right_buffer[i];
+        write(1,&c,1);
+      }
+      ch = ' ';
+      write(1,&ch,1);
+      for (int i=0; i<right_length; i++) {
+        char c = 8;
+        write(1,&c,1);
+      }
+
+      right_length--;
+    }
     else if (ch == 31) {
       // ctrl-?
       read_line_print_usage();
@@ -205,6 +221,7 @@ char * read_line() {
 
       }
       else if (ch1==91 && ch2==67) {
+      //right arrow
         if (right_length == 0) continue;
         write(1,"\033[1C",5);
         line_buffer[line_length]=right_buffer[right_length-1];
