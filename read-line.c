@@ -72,11 +72,21 @@ char * read_line() {
       if (line_length==MAX_BUFFER_LINE-2) break; 
 
       // add char to buffer.
-      line_buffer[line_length-1]=ch;
       if(cru_position == line_length){
+        line_buffer[line_length] = ch;
         line_length++;
+        cru_position++;
+      }else{
+        line_length++;
+        for(int i = line_length; i > cru_position;i--){
+          line_buffer[line_length] = line_buffer[line_length-1]
+        }
+        line_buffer[cru_position] = ch;
+        for (int i=line_length; i>=cru_position; i--) {
+            char c = line_buffer[i];
+            write(1,&c,1);
+        }
       }
-      cru_position++;
 
     }
     else if (ch==10) {
