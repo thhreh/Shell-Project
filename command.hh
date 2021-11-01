@@ -33,6 +33,7 @@ struct Command {
   void insertSimpleCommand( SimpleCommand * simpleCommand );
 
   void clear();
+  void prompt();
   void print();
   void execute();
   bool BuildinFunc(int i);

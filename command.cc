@@ -106,7 +106,7 @@ bool Command::BuildinFunc(int i){
     }
     setenv(_simpleCommands[i]->_arguments[1]->c_str(), _simpleCommands[i]->_arguments[2]->c_str(), 1);
     clear();
-    Shell::prompt();
+    prompt();
     return true;
   }
   //unset enviromental var
@@ -115,7 +115,7 @@ bool Command::BuildinFunc(int i){
       perror("unsetenv");
     }
     clear();
-    Shell::prompt();
+    prompt();
     return true;
   }
   //change directory
@@ -145,7 +145,7 @@ bool Command::BuildinFunc(int i){
 
     }
     clear();
-    Shell::prompt();
+    prompt();
     return true;
   }
 
@@ -155,7 +155,7 @@ bool Command::BuildinFunc(int i){
 void Command::execute() {
     // Don't do anything if there are no simple commands
     if ( _simpleCommands.size() == 0 ) {
-        Shell::prompt();
+        prompt();
         return;
     }
 
@@ -322,8 +322,32 @@ void Command::execute() {
     clear();
 
     // Print new prompt
-    Shell::prompt();
+    prompt();
 
+}
+
+void Command::prompt() {
+  char * PROMPT = getenv("PROMPT");
+  char * ERR = getenv("onError");
+
+  if(isatty(0) && !PROMPT){
+    printf("myshell>");
+    fflush(stdout);
+  }
+
+  if(ERR == NULL){
+    onError = false;
+  }
+  if(isatty(0) && !onError && PROMPT){
+    printf("%s",PROMPT);
+  }
+
+  if(isatty(0) && onError && PROMPT){
+    printf("%s",ERR);
+  }
+
+  fflush(stdout);
+  onError = false;
 }
 
 SimpleCommand * Command::_currentSimpleCommand;

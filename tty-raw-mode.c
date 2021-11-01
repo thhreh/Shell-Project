@@ -11,7 +11,6 @@
  * Also there is no automatic echo.
  */
 
-struct termios tty_attr;
 
 void tty_raw_mode(void)
 {
@@ -27,7 +26,3 @@ void tty_raw_mode(void)
 	tcsetattr(0,TCSANOW,&tty_attr);
 }
 
-void tty_term_mode(void)
-{
-  tcsetattr(0,TCSANOW,&tty_attr);
-}
