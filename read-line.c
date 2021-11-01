@@ -258,6 +258,7 @@ char * read_line() {
         history_index = history_length - 1;
       }
       line_length = strlen(line_buffer);
+      right_length = 0;
 
     }
   }
@@ -271,6 +272,7 @@ char * read_line() {
       strcpy(line_buffer,"");
     }
     line_length = strlen(line_buffer);
+    right_length = 0;
    }
   
 
