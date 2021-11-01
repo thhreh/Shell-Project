@@ -321,7 +321,7 @@ char * read_line() {
   //strcpy(history[history_length++], line_buffer);
   //history[history_length-1][strlen(line_buffer)-1] = '\0';
   //history_index = history_length-1;
-  tty_term_mode();
+  //tty_term_mode();
 
 
   return line_buffer;
