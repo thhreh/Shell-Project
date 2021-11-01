@@ -113,6 +113,32 @@ char * read_line() {
 
       break;
     }
+    else if(ch == 2){
+      //CTRL-B clear whole string 
+      while(right_length != 0){
+        write(1,"\033[1C",5);
+        line_buffer[line_length]=right_buffer[right_length-1];
+        right_length--;
+        line_length++;
+      }
+      while(line_length != 0){
+        // Go back one character
+        ch = 8;
+        write(1,&ch,1);
+        
+               // Write a space to erase the last character read
+        ch = ' ';
+        write(1,&ch,1);
+        
+               // Go back one character
+        ch = 8;
+        write(1,&ch,1);
+         
+               // Remove one character from buffer
+        line_length--;
+      }
+
+    }
     else if (ch == 4){
       //ctrld
       if (right_length == 0) continue;
