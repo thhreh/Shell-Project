@@ -102,6 +102,7 @@ char * read_line() {
       if (right_length != 0) {
         for (int i=right_length-1; i>=0; i--) {
           char c = right_buffer[i];
+          right_buffer[i] = NULL;
           line_buffer[line_length]=c;
           line_length++;
         }
@@ -127,7 +128,6 @@ char * read_line() {
       //}
 
       right_length=0;
-      fflush(right_buffer);
       // Print newline
       write(1,&ch,1);
 
