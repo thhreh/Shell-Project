@@ -384,6 +384,7 @@ void expandWildcardsIfNecessary(std::string * arg){
   struct dirent * ent;
   while ( (ent=readdir(dir)) != NULL) {
     if (regexec(&re, ent->d_name, 1, NULL, 0) == 0) {
+    //hidden file
       if (reg[1] == '.') {
         if (ent->d_name[0] != '.') {
           std::string name(ent->d_name);
