@@ -150,7 +150,11 @@ char * read_line() {
         write(1,&ch,1);
         line_length--;
       }
-      line_buffer = right_buffer;
+      while(right_length != 0){
+        write(1,"\033[1C",5);
+        right_length--;
+        line_length++;
+      }
       line_length = right_length;
       right_length = 0;
     }
