@@ -22,6 +22,7 @@
 #include "command.hh"
 #include "shell.hh"
 
+bool onError = false;
 int return_code = 0;
 int pid_last = 0;
 std::string arg_last = "";
