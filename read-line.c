@@ -106,11 +106,7 @@ char * read_line() {
           line_length++;
         }
       }
-      if(line_length != 0){
-        if (history[history_index]==NULL){
-          history[history_index] = (char *)malloc(MAX_BUFFER_LINE);
-        }
-      }
+      history[history_length] = (char *)malloc(strlen(line_buffer)*sizeof(char)+1);
       strcpy(history[history_length++], line_buffer);
       history[history_length-1][strlen(line_buffer)-1] = '\0';
       history_index = history_length-1;
