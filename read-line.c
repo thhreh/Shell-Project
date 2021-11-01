@@ -139,25 +139,25 @@ char * read_line() {
       }
 
     }
-    else if(ch == 14){
+    //else if(ch == 14){
     //ctrl-N will clear everthing to the left
-      while(line_length != 0){
-        ch = 8;
-        write(1,&ch,1);
-        ch = ' ';
-        write(1,&ch,1);
-        ch = 8;
-        write(1,&ch,1);
-        line_length--;
-      }
-      while(right_length != 0){
-        write(1,"\033[1C",5);
-        right_length--;
-        line_length++;
-      }
-      line_length = right_length;
-      right_length = 0;
-    }
+     // while(line_length != 0){
+     //   ch = 8;
+     //   write(1,&ch,1);
+     //   ch = ' ';
+     //   write(1,&ch,1);
+     //   ch = 8;
+     //   write(1,&ch,1);
+     //   line_length--;
+     // }
+     // while(right_length != 0){
+     //   write(1,"\033[1C",5);
+     //   right_length--;
+     //   line_length++;
+     // }
+     // line_length = right_length;
+    //  right_length = 0;
+   // }
     else if (ch == 4){
       //ctrld
       if (right_length == 0) continue;
