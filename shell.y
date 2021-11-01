@@ -201,10 +201,13 @@ yyerror(const char * s)
 bool string_equality (char * a, char * b) { return strcmp(a,b)<0; }
 
 void expandWildcard(char * prefix, char * suffix) {
+  //prefix are part dealt with, suffix are lefted outa
+  //empty case
   if (suffix[0] == 0) {
     _sortArgument.push_back(strdup(prefix));
     return;
   }
+  //setup and check for edges
   char Prefix[1024];
   char newPrefix[1024];
   if (prefix[0] == 0) {
@@ -219,9 +222,10 @@ void expandWildcard(char * prefix, char * suffix) {
   else{
     sprintf(Prefix, "%s/", prefix);
   }
-
+  //dealing with next component of suffix
   char * s = strchr(suffix, '/');
   char component[1024];
+  //break it to two
   if (s != NULL) {
     strncpy(component, suffix, s-suffix);
     component[s-suffix] = 0;
@@ -231,6 +235,8 @@ void expandWildcard(char * prefix, char * suffix) {
     strcpy(component, suffix);
     suffix = suffix + strlen(suffix);
   }
+
+  //recurively traverse trough directories, if component contain no char wildcard
   if (strchr(component,'?')==NULL & strchr(component,'*')==NULL) {
     if (Prefix[0] == 0){
       strcpy(newPrefix, component);
@@ -241,6 +247,8 @@ void expandWildcard(char * prefix, char * suffix) {
     expandWildcard(newPrefix, suffix);
     return;
   }
+
+  //if they have it
 
   char * reg = (char*)malloc(2*strlen(component)+10);
   char * r = reg;
@@ -261,6 +269,8 @@ void expandWildcard(char * prefix, char * suffix) {
     }
     i++;
   }
+
+  //reg holder
   *r='$'; r++; *r=0;
   regex_t re;
   int expbuf = regcomp(&re, reg, REG_EXTENDED|REG_NOSUB);
@@ -272,6 +282,7 @@ void expandWildcard(char * prefix, char * suffix) {
   else{ 
     dir = Prefix;
   }
+  //directory for recursion
   DIR * d = opendir(dir);
   if (d == NULL) {
     return;
@@ -287,6 +298,8 @@ void expandWildcard(char * prefix, char * suffix) {
       else {
         sprintf(newPrefix, "%s/%s", prefix, ent->d_name);
       }
+
+      //check for hidden file
       if (reg[1] == '.') {
         if (ent->d_name[0] != '.') expandWildcard(newPrefix, suffix);
       } else{
@@ -318,6 +331,7 @@ void expandWildcardsIfNecessary(std::string * arg){
     Command::_currentSimpleCommand->insertArgument(arg);
     return;
   }
+  //converting reg
   char * a;
   std::string path;
   DIR * dir;
@@ -340,6 +354,7 @@ void expandWildcardsIfNecessary(std::string * arg){
     perror("opendir");
     return;
   }
+  //save reg
   char * reg = (char*)malloc(2*strlen(arg_c)+10);
   char * r = reg;
   *r = '^'; r++;
@@ -360,12 +375,13 @@ void expandWildcardsIfNecessary(std::string * arg){
   }
   *r='$'; r++; *r=0;
   regex_t re;
+  //compile reg calculated
   int expbuf = regcomp(&re, reg, REG_EXTENDED|REG_NOSUB);
   if (expbuf != 0) {
     perror("regcomp");
     return;
   }
-
+  //break down directory and  visit,sort directory entries
   std::vector<char *> sortArgument = std::vector<char *>();
   struct dirent * ent;
   while ( (ent=readdir(dir)) != NULL) {

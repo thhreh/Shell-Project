@@ -108,26 +108,7 @@ char * read_line() {
           line_length++;
         }
       }
-      //history[history_length] = (char *)malloc(128);
-      //strcpy(history[history_length++], line_buffer);
-      //history[history_length-1][strlen(line_buffer)-1] = '\0';
-      //history_index = history_length-1;
 
-
-      //if (line_length != 0) {
-        //if (history[history_index]==NULL){
-         // history[history_index] = (char *)malloc(MAX_BUFFER_LINE);
-
-       // }
-       // strcpy(history[history_index], line_buffer);
-       // history_prev = history_index;
-       // history_index++;
-       // if (history_index>=history_length) {
-       //   history_index = 0;
-       //   history_full = 1;
-       // }
-      //}
-      // Print newline
       write(1,&ch,1);
 
       break;

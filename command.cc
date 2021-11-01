@@ -315,6 +315,7 @@ void Command::execute() {
     if (!_background) {
       waitpid(ret, &status, 0);
       std::string s = std::to_string(WEXITSTATUS(status));
+      //when error return print with env
       char * pError = getenv("ON_ERROR");
       if (pError != NULL && WEXITSTATUS(status) != 0) {
         printf("%s\n", pError);
@@ -334,8 +335,7 @@ void Command::execute() {
 
 void Command::prompt() {
   char * PROMPT = getenv("PROMPT");
-  char * ERR = getenv("ON_ERROR");
-
+  //change prompt
   if(isatty(0) && !PROMPT){
     printf("myshell>");
     fflush(stdout);

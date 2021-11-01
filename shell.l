@@ -66,42 +66,6 @@ int mygetc(FILE * f) {
 
 
 
-//std::string& expand_variables(std::string& input){
- // if(str.find("${") <= str.size()){
-   // std::string left_substring = input.substr(0,input.find("${"));
-    //std::string right_substring = input.substr(input.find("}")+strlen("}"));
-    //std::string main = input.substr(left_substring.size()+strlen("${"),input.find("}")-input.find("${")-2);
-    //main = getexceptionenv(main);
-    //input = left + main + expand_variables(right_substring);
-    //left_substring.clear();
-    //right_substring.clear();
-    //main.clear();
-  //}
-  //return input;
-
-//}
-
-//std::string& getexceptionenv(std::string& variable){
- // std::string output;
-  //${$The PID of the shell process
-  //if(variable.compare("$") == 0) {
-    //output = std::to_string(getpid());
-//  }
-  //else{
-    //char * temp = getenv(variable.c_str());
-    //empty enviro list
-    //if(!temp) {
-      //output = variable.c_str();
-    //}
-    //else {
-      //output = temp;
-    //}
-  //}
-  //variable.clear();
-  //variable = output;
-  //output.clear();
-  //return variable;
-//}
 
 
 %}
@@ -239,7 +203,9 @@ int mygetc(FILE * f) {
 }
 
 $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
+  
   std::string variable = yytext;
+  //variable expansion
   std::string result = "";
   if (variable.find("${") <= variable.size()){
     while(variable.find("${") <= variable.size()){
@@ -247,6 +213,7 @@ $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
       result += left_substring;
       std::string right_substring = variable.substr(variable.find("}")+strlen("}"));
       std::string main = variable.substr(left_substring.size()+strlen("${"),variable.find("}")-variable.find("${")-2);
+      //check for other cases
       if(main.compare("$") == 0){
         result += std::to_string(getpid());
       }
