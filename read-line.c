@@ -25,7 +25,6 @@ int right_length;
 // Yours have to be updated.
 int history_index = 0;
 char * history [128];
-int history_length = 0;
 //  "ls -al | grep x", 
 //  "ps -e",
 //  "cat read-line-example.c",
