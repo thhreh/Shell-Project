@@ -214,7 +214,7 @@ char * read_line() {
       // HINT: Use the program "keyboard-example" to
       // see the ascii code for the different chars typed.
       //
-      char ch1; 
+      char ch1;
       char ch2;
       read(0, &ch1, 1);
       read(0, &ch2, 1);
@@ -258,7 +258,7 @@ char * read_line() {
   }
   else if(ch2 == 66){
     //down arrow
-    if(history_length > 0 && history_index <= history_length-1)
+    if(history_length > 0 && history_index <= history_length-1){
       strcpy(line_buffer, history[history_index++]);
     }
     else if(history_index == history_length){
@@ -266,7 +266,8 @@ char * read_line() {
       strcpy(line_buffer,"");
     }
     line_length = strlen(line_buffer);
-  }
+   }
+  
 
 
 	// echo line
