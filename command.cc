@@ -339,11 +339,11 @@ void Command::prompt() {
   if(ERR == NULL){
     ON_ERROR = false;
   }
-  if(isatty(0) && !onError && PROMPT){
+  if(isatty(0) && !ON_ERROR && PROMPT){
     printf("%s",PROMPT);
   }
 
-  if(isatty(0) && onError && PROMPT){
+  if(isatty(0) && ON_ERROR && PROMPT){
     printf("%s",ERR);
   }
 
