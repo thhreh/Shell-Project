@@ -37,7 +37,8 @@ struct Command {
   void print();
   void execute();
   bool BuildinFunc(int i);
-
+  
+  static Command _currentCommand;
   static SimpleCommand *_currentSimpleCommand;
 };
 
