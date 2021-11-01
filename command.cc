@@ -341,7 +341,7 @@ void Command::prompt() {
     fflush(stdout);
   }
 
-  if(isatty(0) && !ON_ERROR && PROMPT){
+  if(isatty(0) && PROMPT){
     printf("%s",PROMPT);
   }
 
