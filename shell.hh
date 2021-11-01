@@ -9,7 +9,6 @@ struct Shell {
 
   static Command _currentCommand;
 
-  static std::vector<int> _PIDs;
 };
 
 #endif

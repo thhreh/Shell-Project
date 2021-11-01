@@ -25,9 +25,7 @@ extern "C" void zombie(int sig) {
 }
 
 int main() {
-  if(isatty(STDIN_FILENO)) {
-    system("/homes/tbagwel/cs252/lab3-src/.shellrc");
-  }
+  
   //ctrl C handle
   struct sigaction sig;
   sig.sa_handler = signalHandle;
@@ -52,11 +50,19 @@ int main() {
     }
   //}
 
+  FILE* fd = fopen(".shellrc", "r");
+    if (fd) {
+      yyrestart(fd);
+      yyparse();
+      yyrestart(stdin);
+      fclose(fd);
+    }
+    else{
+      Command::_currentCommand.prompt();
+    }
 
 
-  Shell::prompt();
   yyparse();
 }
 
 Command Shell::_currentCommand;
-std::vector<int> Shell::_PIDs;
