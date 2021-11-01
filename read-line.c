@@ -266,6 +266,7 @@ char * read_line() {
     //down arrow
     if(history_length > 0 && history_index <= history_length-1){
       strcpy(line_buffer, history[history_index++]);
+      history_index=(history_index)%history_length;
     }
     else if(history_index == history_length){
       history_index = history_length - 1;
