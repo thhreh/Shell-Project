@@ -106,6 +106,15 @@ char * read_line() {
           line_length++;
         }
       }
+      if(line_length != 0){
+        if (history[history_index]==NULL){
+          history[history_index] = (char *)malloc(MAX_BUFFER_LINE);
+        }
+      }
+      strcpy(history[history_length++], line_buffer);
+      history[history_length-1][strlen(line_buffer)-1] = '\0';
+      history_index = history_length-1;
+
 
       //if (line_length != 0) {
         //if (history[history_index]==NULL){
@@ -304,19 +313,19 @@ char * read_line() {
   
   //history update
 
-  if (right_length != 0) {
-     for (int i=right_length-1; i>=0; i--) {
-        char c = right_buffer[i];
-             line_buffer[line_length]=c;
-             line_length++;
-        }
-  }
+  //if (right_length != 0) {
+  //   for (int i=right_length-1; i>=0; i--) {
+  //      char c = right_buffer[i];
+  //           line_buffer[line_length]=c;
+  //           line_length++;
+   //     }
+  //}
 
-  history[history_length] = (char *)malloc(strlen(line_buffer)*sizeof(char)+1);
-  strcpy(history[history_length++], line_buffer);
-  history[history_length-1][strlen(line_buffer)-1] = '\0';
-  history_index = history_length-1;
-  tty_term_mode();
+  //history[history_length] = (char *)malloc(strlen(line_buffer)*sizeof(char)+1);
+  //strcpy(history[history_length++], line_buffer);
+  //history[history_length-1][strlen(line_buffer)-1] = '\0';
+  //history_index = history_length-1;
+  //tty_term_mode();
 
 
   return line_buffer;
