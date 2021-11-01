@@ -127,6 +127,7 @@ char * read_line() {
       //}
 
       right_length=0;
+      fflush(right_buffer)
       // Print newline
       write(1,&ch,1);
 
