@@ -350,6 +350,6 @@ void Command::prompt() {
   fflush(stdout);
   ON_ERROR = false;
 }
-
+Command Command::_currentCommand;
 SimpleCommand * Command::_currentSimpleCommand;
 

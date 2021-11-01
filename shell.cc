@@ -16,7 +16,7 @@ void Shell::prompt() {
 
 extern "C" void signalHandle(int sig){
     printf("\n");
-    Shell::prompt();
+    Command::_currentCommand.prompt();
 } 
 // one message a time
 extern "C" void zombie(int sig) {
@@ -65,4 +65,4 @@ int main() {
   yyparse();
 }
 
-Command Shell::_currentCommand;
+//Command Shell::_currentCommand;
