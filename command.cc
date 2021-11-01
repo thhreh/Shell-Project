@@ -22,7 +22,7 @@
 #include "command.hh"
 #include "shell.hh"
 
-bool ON_ERROR = false;
+
 int return_code = 0;
 int pid_last = 0;
 std::string arg_last = "";
@@ -341,19 +341,11 @@ void Command::prompt() {
     fflush(stdout);
   }
 
-  if(ERR == NULL){
-    ON_ERROR = false;
-  }
   if(isatty(0) && !ON_ERROR && PROMPT){
     printf("%s",PROMPT);
   }
 
-  if(isatty(0) && ON_ERROR && PROMPT){
-    printf("%s\n",ERR);
-  }
-
   fflush(stdout);
-  ON_ERROR = false;
 }
 Command Command::_currentCommand;
 SimpleCommand * Command::_currentSimpleCommand;
