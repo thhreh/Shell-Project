@@ -24,7 +24,6 @@ int right_length;
 // This history does not change. 
 // Yours have to be updated.
 int history_index = 0;
-int history_prev = 0;
 char * history [128];
 int history_length = 0;
 //  "ls -al | grep x", 
@@ -34,7 +33,7 @@ int history_length = 0;
 //  "make",
 //  "ls -al | grep xxx | grep yyy"
 //};
-int history_length = sizeof(history);
+int history_length = 0;
 
 void read_line_print_usage()
 {
@@ -101,13 +100,13 @@ char * read_line() {
     }
     else if (ch==10) {
       // <Enter> was typed. Return line
-      //if (right_length != 0) {
-        //for (int i=right_length-1; i>=0; i--) {
-        //  char c = right_buffer[i];
-      //    line_buffer[line_length]=c;
-       //   line_length++;
-      //  }
-      //}
+      if (right_length != 0) {
+        for (int i=right_length-1; i>=0; i--) {
+          char c = right_buffer[i];
+          line_buffer[line_length]=c;
+          line_length++;
+        }
+      }
 
       //if (line_length != 0) {
         //if (history[history_index]==NULL){
@@ -123,7 +122,7 @@ char * read_line() {
        // }
       //}
 
-      //right_length=0;
+      right_length=0;
       // Print newline
       write(1,&ch,1);
 
@@ -247,13 +246,27 @@ char * read_line() {
 
 
 	// Copy line from history
-	strcpy(line_buffer, history[history_prev]);
-	line_length = strlen(line_buffer);
-  int temp = history_full?history_length:history_index;
-  int bool_temp = ch2 == 65? -1 : 1;
-  history_prev=(history_prev+bool_temp)%temp;
-  if (history_prev == -1){
-    history_prev = temp - 1;
+  if(ch2 == 65){
+    if(history_length > 0 && history_index >= 0){
+      strcpy(line_buffer, history[history_index--]);
+      history_index=(history_index)%history_length;
+      if(history_index == -1){
+        history_index = history_length - 1;
+      }
+      line_length = strlen(line_buffer);
+
+    }
+  }
+  else if(ch2 == 66){
+    //down arrow
+    if(history_length > 0 && history_index <= history_length-1)
+      strcpy(line_buffer, history[history_index++]);
+    }
+    else if(history_index == history_length){
+      history_index = history_length - 1;
+      strcpy(line_buffer,"");
+    }
+    line_length = strlen(line_buffer);
   }
 
 
@@ -288,6 +301,23 @@ char * read_line() {
   line_buffer[line_length]=10;
   line_length++;
   line_buffer[line_length]=0;
+  
+  //history update
+
+  if (right_length != 0) {
+     for (int i=right_length-1; i>=0; i--) {
+        char c = right_buffer[i];
+             line_buffer[line_length]=c;
+             line_length++;
+        }
+  }
+
+  history[history_length] = (char *)malloc(strlen(line_buffer)*sizeof(char)+1);
+  strcpy(history[history_length++], line_buffer);
+  history[history_length-1][strlen(line_buffer)-1] = '\0';
+  history_index = history_length-1;
+  tty_term_mode();
+
 
   return line_buffer;
 }
