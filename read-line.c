@@ -150,6 +150,9 @@ char * read_line() {
         write(1,&ch,1);
         line_length--;
       }
+      line_buffer = right_buffer;
+      line_length = right_length;
+      right_length = 0;
     }
     else if (ch == 4){
       //ctrld
