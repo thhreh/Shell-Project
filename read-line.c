@@ -25,8 +25,8 @@ int right_length;
 // Yours have to be updated.
 int history_index = 0;
 int history_prev = 0;
-char * history [16];
-int history_full;
+char * history [128];
+int history_length = 0;
 //  "ls -al | grep x", 
 //  "ps -e",
 //  "cat read-line-example.c",
@@ -101,29 +101,29 @@ char * read_line() {
     }
     else if (ch==10) {
       // <Enter> was typed. Return line
-      if (right_length != 0) {
-        for (int i=right_length-1; i>=0; i--) {
-          char c = right_buffer[i];
-          line_buffer[line_length]=c;
-          line_length++;
-        }
-      }
+      //if (right_length != 0) {
+        //for (int i=right_length-1; i>=0; i--) {
+        //  char c = right_buffer[i];
+      //    line_buffer[line_length]=c;
+       //   line_length++;
+      //  }
+      //}
 
-      if (line_length != 0) {
-        if (history[history_index]==NULL){
-          history[history_index] = (char *)malloc(MAX_BUFFER_LINE);
+      //if (line_length != 0) {
+        //if (history[history_index]==NULL){
+         // history[history_index] = (char *)malloc(MAX_BUFFER_LINE);
 
-        }
-        strcpy(history[history_index], line_buffer);
-        history_prev = history_index;
-        history_index++;
-        if (history_index>=history_length) {
-          history_index = 0;
-          history_full = 1;
-        }
-      }
+       // }
+       // strcpy(history[history_index], line_buffer);
+       // history_prev = history_index;
+       // history_index++;
+       // if (history_index>=history_length) {
+       //   history_index = 0;
+       //   history_full = 1;
+       // }
+      //}
 
-      right_length=0;
+      //right_length=0;
       // Print newline
       write(1,&ch,1);
 
