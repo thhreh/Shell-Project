@@ -206,7 +206,7 @@ void expandWildcard(char * prefix, char * suffix) {
   if (suffix[0] == 0) {
     char* temp = strdup(prefix);
     _sortArgument.push_back(temp);
-    free(temp):
+    free(temp);
     return;
   }
   //setup and check for edges

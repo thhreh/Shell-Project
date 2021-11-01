@@ -272,6 +272,7 @@ $\{[^ \}\n]*\}([^ \n]*|$\{[^ \}\n]*\})* {
     }
   }
   yylval.cpp_string = new std::string(temp_string);
+  free(str);
   temp_string.clear();
   return WORD;
 }
