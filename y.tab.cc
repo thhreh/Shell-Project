@@ -1880,8 +1880,6 @@ void expandWildcard(char * prefix, char * suffix) {
   free(reg);
 
 
-
-
 }
 
 void expandWildcardsIfNecessary(std::string * arg){
@@ -1961,6 +1959,7 @@ void expandWildcardsIfNecessary(std::string * arg){
   }
   closedir(dir);
   regfree(&re);
+  free(reg);
 
   std::sort(sortArgument.begin(), sortArgument.end(), string_equality);
 
