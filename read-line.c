@@ -104,13 +104,14 @@ char * read_line() {
           char c = right_buffer[i];
           right_buffer[i] = 'z';
           line_buffer[line_length]=c;
+          right_length--;
           line_length++;
         }
       }
-      history[history_length] = (char *)malloc(128);
-      strcpy(history[history_length++], line_buffer);
+      //history[history_length] = (char *)malloc(128);
+      //strcpy(history[history_length++], line_buffer);
       //history[history_length-1][strlen(line_buffer)-1] = '\0';
-      history_index = history_length-1;
+      //history_index = history_length-1;
 
 
       //if (line_length != 0) {
@@ -126,8 +127,6 @@ char * read_line() {
        //   history_full = 1;
        // }
       //}
-
-      right_length=0;
       // Print newline
       write(1,&ch,1);
 
@@ -325,7 +324,12 @@ char * read_line() {
   //strcpy(history[history_length++], line_buffer);
   //history[history_length-1][strlen(line_buffer)-1] = '\0';
   //history_index = history_length-1;
-  //tty_term_mode();
+  //tty_term_mode();a
+
+  history[history_length] = (char *)malloc(128);
+  strcpy(history[history_length++], line_buffer);
+         //history[history_length-1][strlen(line_buffer)-1] = '\0';
+  history_index = history_length-1;
 
 
   return line_buffer;
