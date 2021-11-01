@@ -65,4 +65,4 @@ int main() {
   yyparse();
 }
 
-//Command Shell::_currentCommand;
+Command Shell::_currentCommand;
