@@ -58,7 +58,7 @@ int main() {
       fclose(fd);
     }
     else{
-      Shell::_currentCommand.prompt();
+      Shell::prompt();
     }
 
 
