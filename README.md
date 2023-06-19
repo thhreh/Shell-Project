@@ -1,6 +1,7 @@
 # Shell-Project
 Shell Project for Purdue cs252
-Implemented a shell interpreter using C, C++, Lex& Yacc, enabling users to interact with OS through command line. \
+Implemented a shell interpreter using C, C++, Lex& Yacc, \
+enabling users to interact with OS through command line. \
  Implementing key shell functionality such as program execution/process creation, \
  input/output redirection, wildcard, piping, subshell, edit-mode, history list, \
  and Zombie Process Handling.\
