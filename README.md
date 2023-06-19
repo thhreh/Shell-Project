@@ -7,4 +7,4 @@ enabling users to interact with OS through command line. \
  and Zombie Process Handling.\
  Use make to create shell excecutable, or call shell directly. \
  mainly impletemented command.cc, readline.c, shell.cc, shell.l, shell.y \
- 
+ completed in 2021, full credits.
