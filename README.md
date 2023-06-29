@@ -6,5 +6,5 @@
  input/output redirection, wildcard, piping, subshell, edit-mode, history list, \
  and Zombie Process Handling.\
  -Use make to create shell excecutable, or call shell directly. \
- -mainly implementations are located in command.cc, readline.c, shell.cc, shell.l, shell.y \
+ -mainly implementations are located in command.cc, read-line.c, shell.cc, shell.l, shell.y \
  completed in 2021, full credits.
