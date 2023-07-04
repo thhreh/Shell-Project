@@ -7,4 +7,4 @@
  and Zombie Process Handling.\
  -Use make to create shell excecutable, or call shell directly. \
  -mainly implementations are located in command.cc, read-line.c, shell.cc, shell.l, shell.y \
- completed in 2021, full credits.
+ completed in 2021, all required features implemented, full credits.
